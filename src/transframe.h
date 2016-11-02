@@ -1,8 +1,7 @@
 #pragma once
 #include "k5.h"
-#include "transframe.h"
 
-class CDemoFrame : public CFrame{
+class CTransFrame : public CFrame {
 public:
 	void Init(SDL_Renderer* rnd);
 	void Cleanup();
@@ -14,13 +13,13 @@ public:
 	void Loop(CEngine* engine);
 	void Render(CEngine* engine);
 
-	static CDemoFrame* Instance() {
+	static CTransFrame* Instance() {
 		return &m_pInstance;
 	}
 protected:
-	CDemoFrame() {}
+	CTransFrame() {}
 private:
-	static CDemoFrame m_pInstance;
+	static CTransFrame m_pInstance;
 
 	SDL_Renderer* m_rnd;
 

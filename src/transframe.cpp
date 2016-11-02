@@ -1,23 +1,24 @@
+#include "transframe.h"
 #include "demoframe.h"
 
-CDemoFrame CDemoFrame::m_pInstance;
+CTransFrame CTransFrame::m_pInstance;
 
-void CDemoFrame::Init(SDL_Renderer* rnd) {
+void CTransFrame::Init(SDL_Renderer* rnd) {
 	m_rnd = rnd;
 
-	bkg = SDL_LoadBMP("res/test.bmp");
+	bkg = SDL_LoadBMP("res/test2.bmp");
 	tex = SDL_CreateTextureFromSurface(m_rnd, bkg);
 }
 
-void CDemoFrame::Cleanup() {
+void CTransFrame::Cleanup() {
 	SDL_FreeSurface(bkg);
 	SDL_DestroyTexture(tex);
 }
 
-void CDemoFrame::Pause() {}
-void CDemoFrame::Resume() {}
+void CTransFrame::Pause() {}
+void CTransFrame::Resume() {}
 
-void CDemoFrame::PollEvents(CEngine* engine) {
+void CTransFrame::PollEvents(CEngine* engine) {
 	SDL_Event e;
 	if (SDL_PollEvent(&e)) {
 		switch (e.type) {
@@ -30,16 +31,16 @@ void CDemoFrame::PollEvents(CEngine* engine) {
 					engine->Quit();
 					break;
 			case SDLK_SPACE:
-					engine->ChangeFrame(CTransFrame::Instance());
+					engine->ChangeFrame(CDemoFrame::Instance());
 					break;
 			}
 		}
 	}
 }
 
-void CDemoFrame::Loop(CEngine* engine) {}
+void CTransFrame::Loop(CEngine* engine) {}
 
-void CDemoFrame::Render(CEngine* engine) {
+void CTransFrame::Render(CEngine* engine) {
 	SDL_RenderClear(m_rnd);
 	SDL_RenderCopy(m_rnd, tex, NULL, NULL);
 	SDL_RenderPresent(m_rnd);
