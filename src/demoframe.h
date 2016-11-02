@@ -14,12 +14,12 @@ public:
 	void Render(CEngine* engine);
 
 	static CDemoFrame* Instance() {
-		return &m_DemoFrame;
+		return &m_pInstance;
 	}
 protected:
 	CDemoFrame() {}
 private:
-	static CDemoFrame m_DemoFrame;
+	static CDemoFrame m_pInstance;
 
 	SDL_Renderer* m_rnd;
 

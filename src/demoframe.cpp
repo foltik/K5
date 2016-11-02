@@ -1,5 +1,7 @@
 #include "demoframe.h"
 
+CDemoFrame CDemoFrame::m_pInstance;
+
 void CDemoFrame::Init(SDL_Renderer* rnd) {
 	m_rnd = rnd;
 
