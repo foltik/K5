@@ -1,8 +1,8 @@
 CC = clang++
 
 LIBFLAGS = -lSDL2
-FLAGS = -Wall
-DBGFLAGS = -Wall -ggdb3
+FLAGS = -Wall -std=c++11
+DBGFLAGS = -Wall -ggdb3 -std=c++11
 
 BUILDDIR = build
 
