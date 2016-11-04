@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1C1E5EEE-5118-4EF2-BDE8-D9CCD7236F52}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -71,14 +71,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)build\windows\$(Configuration)</OutDir>
-    <IntDir>$(SolutionDir)build\windows\$(Configuration)\obj</IntDir>
+    <OutDir>$(SolutionDir)build\windows\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\windows\$(Configuration)\obj\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)build\windows\$(Configuration)</OutDir>
-    <IntDir>$(SolutionDir)build\windows\$(Configuration)\obj</IntDir>
+    <OutDir>$(SolutionDir)build\windows\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\windows\$(Configuration)\obj\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -109,10 +109,38 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)res\* $(ProjectDir)build\windows\$(Configuration)\res</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy res folder to build directory</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)res\* $(ProjectDir)build\windows\$(Configuration)\res</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy res folder to build directory</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\demoframe.cpp" />
     <ClCompile Include="src\engine.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\timer.cpp" />
+    <ClCompile Include="src\transframe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\demoframe.h" />
@@ -120,6 +148,8 @@
     <ClInclude Include="src\frame.h" />
     <ClInclude Include="src\k5.h" />
     <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\timer.h" />
+    <ClInclude Include="src\transframe.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
