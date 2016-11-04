@@ -2,7 +2,7 @@
 
 #include "frame.h"
 
-CEngine::CEngine(const char* title, uint32 px, uint32 py, uint32 width, uint32 height, bool fullscreen) {
+CEngine::CEngine(const char* title, unsigned int px, unsigned int py, unsigned int width, unsigned int height, bool fullscreen) {
 	running = true;
 	wndTitle = title;
 	wndX = px;
@@ -17,6 +17,12 @@ bool CEngine::Init() {
 	if ((wnd = SDL_CreateWindow(wndTitle, wndX, wndY, wndW, wndH, wndFull ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_SHOWN)) == NULL) return false;
 	if ((rnd = SDL_CreateRenderer(wnd, -1, SDL_RENDERER_ACCELERATED /*| SDL_RENDERER_PRESENTVSYNC*/)) == NULL) return false;
 
+	lastTime = 0;
+	startTime = 0;
+	frameCount = 0;
+	fps = 0;
+	remainingTime = 0;
+
 	return true;
 }
 
@@ -24,7 +30,7 @@ void CEngine::Tick() {
 	doRender = false;
 
 	startTime = SDL_GetTicks();
-	int32 passedTime = startTime - lastTime;
+	unsigned passedTime = startTime - lastTime;
 	lastTime = startTime;
 	remainingTime += passedTime / 1000.0;
 	frameCount += passedTime;
