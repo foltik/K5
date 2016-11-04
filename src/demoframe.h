@@ -4,7 +4,7 @@
 
 class CDemoFrame : public CFrame{
 public:
-	void Init(SDL_Renderer* rnd);
+	void Init(SDL_Renderer* renderer);
 	void Cleanup();
 
 	void Pause();
@@ -15,15 +15,17 @@ public:
 	void Render(CEngine* engine);
 
 	static CDemoFrame* Instance() {
-		return &m_pInstance;
+		return &pInstance;
 	}
 protected:
 	CDemoFrame() {}
 private:
-	static CDemoFrame m_pInstance;
-
-	SDL_Renderer* m_rnd;
+	int x;
 
 	SDL_Surface* bkg;
 	SDL_Texture* tex;
+
+	SDL_Renderer* rnd;
+
+	static CDemoFrame pInstance;
 };

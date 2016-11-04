@@ -3,7 +3,7 @@
 
 class CTransFrame : public CFrame {
 public:
-	void Init(SDL_Renderer* rnd);
+	void Init(SDL_Renderer* renderer);
 	void Cleanup();
 
 	void Pause();
@@ -14,15 +14,15 @@ public:
 	void Render(CEngine* engine);
 
 	static CTransFrame* Instance() {
-		return &m_pInstance;
+		return &pInstance;
 	}
 protected:
 	CTransFrame() {}
 private:
-	static CTransFrame m_pInstance;
-
-	SDL_Renderer* m_rnd;
-
 	SDL_Surface* bkg;
 	SDL_Texture* tex;
+
+	SDL_Renderer* rnd;
+
+	static CTransFrame pInstance;
 };

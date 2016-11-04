@@ -1,12 +1,12 @@
 #include "demoframe.h"
 
-CDemoFrame CDemoFrame::m_pInstance;
+CDemoFrame CDemoFrame::pInstance;
 
-void CDemoFrame::Init(SDL_Renderer* rnd) {
-	m_rnd = rnd;
+void CDemoFrame::Init(SDL_Renderer* renderer) {
+	rnd = renderer;
 
 	bkg = SDL_LoadBMP("res/test.bmp");
-	tex = SDL_CreateTextureFromSurface(m_rnd, bkg);
+	tex = SDL_CreateTextureFromSurface(rnd, bkg);
 }
 
 void CDemoFrame::Cleanup() {
@@ -37,11 +37,18 @@ void CDemoFrame::PollEvents(CEngine* engine) {
 	}
 }
 
-void CDemoFrame::Loop(CEngine* engine) {}
+void CDemoFrame::Loop(CEngine* engine) {
+	if (x < 1500) x++;
+	else x = 0;
+}
 
 void CDemoFrame::Render(CEngine* engine) {
-	SDL_RenderClear(m_rnd);
-	SDL_RenderCopy(m_rnd, tex, NULL, NULL);
-	SDL_RenderPresent(m_rnd);
-	SDL_Delay(10);
+	SDL_RenderClear(rnd);
+
+	SDL_RenderCopy(rnd, tex, NULL, NULL);
+
+	SDL_Rect rect = {x, 512, 100, 100};
+	SDL_RenderDrawRect(rnd, &rect);
+
+	SDL_RenderPresent(rnd);
 }
