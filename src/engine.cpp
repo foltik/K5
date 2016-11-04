@@ -1,21 +1,56 @@
 #include "engine.h"
+
 #include "frame.h"
 
-CEngine::CEngine(const char* title, int px, int py, int width, int height, bool fullscreen) {
-	m_running = true;
-	m_wndTitle = title;
-	m_wndX = px;
-	m_wndY = py;
-	m_wndW = width;
-	m_wndH = height;
-	m_wndFull = fullscreen;
+CEngine::CEngine(const char* title, uint32 px, uint32 py, uint32 width, uint32 height, bool fullscreen) {
+	running = true;
+	wndTitle = title;
+	wndX = px;
+	wndY = py;
+	wndW = width;
+	wndH = height;
+	wndFull = fullscreen;
 }
 
 bool CEngine::Init() {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) return false;
-	if ((wnd = SDL_CreateWindow(m_wndTitle, m_wndX, m_wndY, m_wndW, m_wndH, m_wndFull ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_SHOWN)) == NULL) return false;
-	if ((rnd = SDL_CreateRenderer(wnd, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)) == NULL) return false;
+	if ((wnd = SDL_CreateWindow(wndTitle, wndX, wndY, wndW, wndH, wndFull ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_SHOWN)) == NULL) return false;
+	if ((rnd = SDL_CreateRenderer(wnd, -1, SDL_RENDERER_ACCELERATED /*| SDL_RENDERER_PRESENTVSYNC*/)) == NULL) return false;
+
 	return true;
+}
+
+void CEngine::Tick() {
+	doRender = false;
+
+	startTime = SDL_GetTicks();
+	int32 passedTime = startTime - lastTime;
+	lastTime = startTime;
+	remainingTime += passedTime / 1000.0;
+	frameCount += passedTime;
+
+	while (remainingTime > FRAME_TIME) {
+		doRender = true;
+		remainingTime -= FRAME_TIME;
+
+		PollEvents();
+		Loop();
+
+		if (frameCount >= 1000) {
+			printf("FPS : %d\n", fps);
+			fps = 0;
+			frameCount = 0;
+		}
+	}
+
+	if (doRender) {
+		Render();
+		fps++;
+	}
+	else {
+		// Don't waste CPU clocks
+		SDL_Delay(1);
+	}
 }
 
 void CEngine::PollEvents() {

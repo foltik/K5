@@ -18,5 +18,5 @@ public:
 		engine->ChangeFrame(frame);
 	}
 protected:
-	CFrame(){}
+	CFrame() {}
 };

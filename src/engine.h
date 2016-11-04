@@ -13,16 +13,25 @@
 #error Unsupported Platform
 #endif
 
+#include <cstdint>
 #include <vector>
+
+#define FRAME_CAP 240
+#define FRAME_TIME 1.0 / FRAME_CAP
 
 #define K5_EXIT_SUCCESS 0
 #define K5_EXIT_FAILURE 1
+
+typedef int_fast64_t int64;
+typedef uint_fast64_t uint64;
+typedef int_fast32_t int32;
+typedef uint_fast32_t uint32;
 
 class CFrame;
 
 class CEngine {
 public:
-	CEngine(const char* title, int px, int py, int width, int height, bool fullscreen);
+	CEngine(const char* title, uint32 px, uint32 py, uint32 width, uint32 height, bool fullscreen);
 
 	bool Init();
 	void Cleanup();
@@ -31,6 +40,8 @@ public:
 	void PushFrame(CFrame* frame);
 	void PopFrame();
 
+	void Tick();
+
 	void PollEvents();
 	void Loop();
 	void Render();
@@ -38,16 +49,30 @@ public:
 	SDL_Window* wnd;
 	SDL_Renderer* rnd;
 
-	bool Running() { return m_running; }
-	void Quit() { m_running = false; }
+	bool Running() { return running; }
+	void Quit() { running = false; }
 private:
-	std::vector<CFrame*> frames;
-	bool m_running;
+	bool running;
 
-	const char* m_wndTitle;
-	int m_wndX;
-	int m_wndY;
-	int m_wndW;
-	int m_wndH;
-	bool m_wndFull;
+	std::vector<CFrame*> frames;
+
+	//-----------------------------
+	// Timing Vars
+	//-----------------------------	
+	bool doRender;
+	int32 lastTime = 0;
+	int32 startTime = 0;
+	int32 frameCount = 0;
+	int32 fps = 0;
+	double remainingTime = 0;
+
+	//-----------------------------
+	// Window Data
+	//-----------------------------
+	const char* wndTitle;
+	uint32 wndX;
+	uint32 wndY;
+	uint32 wndW;
+	uint32 wndH;
+	bool wndFull;
 };
