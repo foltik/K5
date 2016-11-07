@@ -17,46 +17,29 @@ bool CEngine::Init() {
 	if ((wnd = SDL_CreateWindow(wndTitle, wndX, wndY, wndW, wndH, wndFull ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_SHOWN)) == NULL) return false;
 	if ((rnd = SDL_CreateRenderer(wnd, -1, SDL_RENDERER_ACCELERATED /*| SDL_RENDERER_PRESENTVSYNC*/)) == NULL) return false;
 
-	lastTime = 0;
-	startTime = 0;
-	frameCount = 0;
-	fps = 0;
-	remainingTime = 0;
+	// Initialize Timing Vars
+	time = 0.0;
+	lastTime = SDL_GetTicks() / 1000.0;
+	accumulator = 0.0;
 
 	return true;
 }
 
 void CEngine::Tick() {
-	doRender = false;
+	double currentTime = SDL_GetTicks() / 1000.0;
+	double frameTime = currentTime - lastTime;
+	lastTime = currentTime;
 
-	startTime = SDL_GetTicks();
-	unsigned passedTime = startTime - lastTime;
-	lastTime = startTime;
-	remainingTime += passedTime / 1000.0;
-	frameCount += passedTime;
+	accumulator += frameTime;
 
-	while (remainingTime > FRAME_TIME) {
-		doRender = true;
-		remainingTime -= FRAME_TIME;
-
+	while (accumulator > delta) {
 		PollEvents();
 		Loop();
-
-		if (frameCount >= 1000) {
-			printf("FPS : %d\n", fps);
-			fps = 0;
-			frameCount = 0;
-		}
+		accumulator -= delta;
+		time += delta;
 	}
 
-	if (doRender) {
-		Render();
-		fps++;
-	}
-	else {
-		// Don't waste CPU clocks
-		SDL_Delay(1);
-	}
+	Render();
 }
 
 void CEngine::PollEvents() {
