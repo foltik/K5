@@ -13,6 +13,9 @@
 
 #include <vector>
 
+#include "vec2f.h"
+#include "vec3f.h"
+
 #define FRAME_CAP 240
 #define FRAME_TIME 1.0 / FRAME_CAP
 
@@ -51,12 +54,10 @@ private:
 	//-----------------------------
 	// Timing Vars
 	//-----------------------------	
-	bool doRender;
-	int lastTime;
-	int startTime;
-	int frameCount;
-	int fps;
-	double remainingTime;
+	const double delta = 1.0 / 60.0;
+	double time;
+	double lastTime;
+	double accumulator;
 
 	//-----------------------------
 	// Window Data

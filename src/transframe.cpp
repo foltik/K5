@@ -22,18 +22,15 @@ void CTransFrame::PollEvents(CEngine* engine) {
 	SDL_Event e;
 	if (SDL_PollEvent(&e)) {
 		switch (e.type) {
-		case SDL_QUIT:
-			engine->Quit();
-			break;
-		case SDL_KEYDOWN:
-			switch (e.key.keysym.sym) {
-			case SDLK_ESCAPE:
-					engine->Quit();
-					break;
-			case SDLK_SPACE:
-					engine->ChangeFrame(CDemoFrame::Instance());
-					break;
-			}
+			case SDL_KEYDOWN:
+				switch (e.key.keysym.sym) {
+					case SDLK_ESCAPE:
+						engine->Quit();
+						break;
+					case SDLK_SPACE:
+						engine->ChangeFrame(CDemoFrame::Instance());
+						break;
+				}
 		}
 	}
 }

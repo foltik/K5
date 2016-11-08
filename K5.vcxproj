@@ -139,8 +139,9 @@
     <ClCompile Include="src\demoframe.cpp" />
     <ClCompile Include="src\engine.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\timer.cpp" />
     <ClCompile Include="src\transframe.cpp" />
+    <ClCompile Include="src\vec2f.cpp" />
+    <ClCompile Include="src\vec3f.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\demoframe.h" />
@@ -148,8 +149,9 @@
     <ClInclude Include="src\frame.h" />
     <ClInclude Include="src\k5.h" />
     <ClInclude Include="src\main.h" />
-    <ClInclude Include="src\timer.h" />
     <ClInclude Include="src\transframe.h" />
+    <ClInclude Include="src\vec2f.h" />
+    <ClInclude Include="src\vec3f.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
