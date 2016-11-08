@@ -1,5 +1,6 @@
 #pragma once
 #include "k5.h"
+#include "vec2f.h"
 #include "transframe.h"
 
 class CDemoFrame : public CFrame{
@@ -20,7 +21,8 @@ public:
 protected:
 	CDemoFrame() {}
 private:
-	int x;
+	int x, y;
+	int w, a, s, d;
 
 	SDL_Surface* bkg;
 	SDL_Texture* tex;
