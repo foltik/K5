@@ -42,11 +42,11 @@ vec2f vec2f::rotated(float angle) {
 
 #pragma region Operator Overloads
 inline bool vec2f::operator==(const vec2f& v) const {
-	return (this->x == v.x && this->y == v.y);
+	return (x == v.x && y == v.y);
 }
 
 inline bool vec2f::operator!=(const vec2f& v) const {
-	return (this->x != v.x && this->y != v.y);
+	return (x != v.x && y != v.y);
 }
 
 inline vec2f vec2f::operator-(void) const {
@@ -55,29 +55,29 @@ inline vec2f vec2f::operator-(void) const {
 
 inline vec2f vec2f::operator-(const vec2f& v) const {
 	vec2f res;
-	res.x = this->x - v.x;
-	res.y = this->y - v.y;
+	res.x = x - v.x;
+	res.y = y - v.y;
 	return res;
 }
 
 inline vec2f vec2f::operator+(const vec2f& v) const {
 	vec2f res;
-	res.x = this->x + v.x;
-	res.y = this->y + v.y;
+	res.x = x + v.x;
+	res.y = y + v.y;
 	return res;
 }
 
 inline vec2f vec2f::operator*(float s) const {
 	vec2f res;
-	res.x = this->x * s;
-	res.y = this->y * s;
+	res.x = x * s;
+	res.y = y * s;
 	return res;
 }
 
 inline vec2f vec2f::operator*(const vec2f& v) const {
 	vec2f res;
-	res.x = this->x * v.x;
-	res.y = this->y * v.y;
+	res.x = x * v.x;
+	res.y = y * v.y;
 	return res;
 }
 
@@ -87,15 +87,15 @@ inline vec2f operator*(float s, const vec2f& v) {
 
 inline vec2f vec2f::operator/(float s) const {
 	vec2f res;
-	res.x = this->x / s;
-	res.y = this->y / s;
+	res.x = x / s;
+	res.y = y / s;
 	return res;
 }
 
 inline vec2f vec2f::operator/(const vec2f& v) const {
 	vec2f res;
-	res.x = this->x / v.x;
-	res.y = this->y / v.y;
+	res.x = x / v.x;
+	res.y = y / v.y;
 	return res;
 }
 #pragma endregion

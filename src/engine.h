@@ -13,6 +13,7 @@
 
 #include <vector>
 
+#include "quat.h"
 #include "mat4f.h"
 #include "vec2f.h"
 #include "vec3f.h"

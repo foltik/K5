@@ -1,6 +1,6 @@
 #include "vec3f.h"
 
-vec3f::vec3f() {}
+vec3f::vec3f(void) {}
 
 vec3f::vec3f(float X, float Y, float Z) {
 	x = X;
@@ -44,11 +44,11 @@ vec3f vec3f::cross(vec3f v) {
 
 #pragma region Operator Overloads
 inline bool vec3f::operator==(const vec3f& v) const {
-	return (this->x == v.x && this->y == v.y && this->z == v.z);
+	return (x == v.x && y == v.y && z == v.z);
 }
 
 inline bool vec3f::operator!=(const vec3f& v) const {
-	return (this->x != v.x && this->y != v.y && this->z != v.z);
+	return (x != v.x && y != v.y && z != v.z);
 }
 
 inline vec3f vec3f::operator-(void) const {
@@ -57,33 +57,33 @@ inline vec3f vec3f::operator-(void) const {
 
 inline vec3f vec3f::operator-(const vec3f& v) const {
 	vec3f res;
-	res.x = this->x - v.x;
-	res.y = this->y - v.y;
-	res.z = this->z - v.z;
+	res.x = x - v.x;
+	res.y = y - v.y;
+	res.z = z - v.z;
 	return res;
 }
 
 inline vec3f vec3f::operator+(const vec3f& v) const {
 	vec3f res;
-	res.x = this->x + v.x;
-	res.y = this->y + v.y;
-	res.z = this->z + v.z;
+	res.x = x + v.x;
+	res.y = y + v.y;
+	res.z = z + v.z;
 	return res;
 }
 
 inline vec3f vec3f::operator*(float s) const {
 	vec3f res;
-	res.x = this->x * s;
-	res.y = this->y * s;
-	res.z = this->z * s;
+	res.x = x * s;
+	res.y = y * s;
+	res.z = z * s;
 	return res;
 }
 
 inline vec3f vec3f::operator*(const vec3f& v) const {
 	vec3f res;
-	res.x = this->x * v.x;
-	res.y = this->y * v.y;
-	res.z = this->z * v.z;
+	res.x = x * v.x;
+	res.y = y * v.y;
+	res.z = z * v.z;
 	return res;
 }
 
@@ -93,17 +93,17 @@ inline vec3f operator*(float s, const vec3f& v) {
 
 inline vec3f vec3f::operator/(float s) const {
 	vec3f res;
-	res.x = this->x / s;
-	res.y = this->y / s;
-	res.z = this->z / s;
+	res.x = x / s;
+	res.y = y / s;
+	res.z = z / s;
 	return res;
 }
 
 inline vec3f vec3f::operator/(const vec3f& v) const {
 	vec3f res;
-	res.x = this->x / v.x;
-	res.y = this->y / v.y;
-	res.z = this->z / v.z;
+	res.x = x / v.x;
+	res.y = y / v.y;
+	res.z = z / v.z;
 	return res;
 }
 #pragma endregion

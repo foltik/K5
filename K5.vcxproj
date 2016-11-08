@@ -140,6 +140,7 @@
     <ClCompile Include="src\engine.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mat4f.cpp" />
+    <ClCompile Include="src\quat.cpp" />
     <ClCompile Include="src\transframe.cpp" />
     <ClCompile Include="src\vec2f.cpp" />
     <ClCompile Include="src\vec3f.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="src\k5.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\mat4f.h" />
+    <ClInclude Include="src\quat.h" />
     <ClInclude Include="src\transframe.h" />
     <ClInclude Include="src\vec2f.h" />
     <ClInclude Include="src\vec3f.h" />
