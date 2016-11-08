@@ -40,7 +40,6 @@ vec2f vec2f::rotated(float angle) {
 	return vec2f(x * cos - y * sin, x * sin + y * cos);
 }
 
-#pragma region Operator Overloads
 inline bool vec2f::operator==(const vec2f& v) const {
 	return (x == v.x && y == v.y);
 }
@@ -98,4 +97,3 @@ inline vec2f vec2f::operator/(const vec2f& v) const {
 	res.y = y / v.y;
 	return res;
 }
-#pragma endregion

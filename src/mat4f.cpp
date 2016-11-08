@@ -16,6 +16,7 @@ mat4f mat4f::translate(float x, float y, float z) {
 	mat[0][3] = x;
 	mat[1][3] = y;
 	mat[2][3] = z;
+	return *this;
 }
 
 mat4f mat4f::scale(float x, float y, float z) {
@@ -23,6 +24,7 @@ mat4f mat4f::scale(float x, float y, float z) {
 	mat[0][0] = x;
 	mat[1][1] = y;
 	mat[2][2] = z;
+	return *this;
 }
 
 mat4f mat4f::operator*(const mat4f& m) const {
