@@ -5,9 +5,15 @@ CTransFrame CTransFrame::pInstance;
 
 void CTransFrame::Init(SDL_Renderer* renderer) {
 	rnd = renderer;
-
-	bkg = SDL_LoadBMP("res/test2.bmp");
-	tex = SDL_CreateTextureFromSurface(rnd, bkg);
+	
+	for (int i = 0; i < 500; i++) {
+		Drop d;
+		d.pos.x = rand() % 1600 + 1;
+		d.pos.y = rand() % 900 + 1;
+		d.vel = rand() % 4 + 2;
+		d.len = rand() % 10 + 5;
+		drops.push_back(d);
+	}
 }
 
 void CTransFrame::Cleanup() {
@@ -35,10 +41,23 @@ void CTransFrame::PollEvents(CEngine* engine) {
 	}
 }
 
-void CTransFrame::Loop(CEngine* engine) {}
+void CTransFrame::Loop(CEngine* engine) {
+	for (int i = 0; i < drops.size(); i++) {
+		if (drops[i].pos.y < 900)
+			drops[i].pos.y += drops[i].vel;
+		else
+			drops[i].pos.y = -10;
+	}
+}
 
 void CTransFrame::Render(CEngine* engine) {
+	SDL_SetRenderDrawColor(rnd, 230, 230, 250, 255);
 	SDL_RenderClear(rnd);
-	SDL_RenderCopy(rnd, tex, NULL, NULL);
+
+	for (Drop d : drops) {
+		SDL_SetRenderDrawColor(rnd, 138, 143, 226, 255);
+		SDL_RenderDrawLine(rnd, d.pos.x, d.pos.y, d.pos.x, d.pos.y + d.len);
+	}
+
 	SDL_RenderPresent(rnd);
 }

@@ -1,10 +1,15 @@
 #pragma once
 #ifdef __linux__
+#define GL_GLEXT_PROTOTYPES
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_opengl.h"
 #include "SDL2/SDL_ttf.h"
 #elif _WIN32
+#define GL_GLEXT_PROTOTYPES
 #include <SDL2/SDL.h>
 #pragma comment(lib, "SDL2.lib")
+#include <SDL2/SDL_opengl.h>
+#pragma comment(lib, "opengl32.lib")
 #include <SDL2/SDL_ttf.h>
 #pragma comment(lib, "SDL2_ttf.lib")
 #else

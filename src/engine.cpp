@@ -15,7 +15,15 @@ CEngine::CEngine(const char* title, unsigned int px, unsigned int py, unsigned i
 bool CEngine::Init() {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) return false;
 	if ((wnd = SDL_CreateWindow(wndTitle, wndX, wndY, wndW, wndH, wndFull ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_SHOWN)) == NULL) return false;
-	if ((rnd = SDL_CreateRenderer(wnd, -1, SDL_RENDERER_ACCELERATED /*| SDL_RENDERER_PRESENTVSYNC*/)) == NULL) return false;
+	if ((rnd = SDL_CreateRenderer(wnd, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)) == NULL) return false;
+
+	glFrontFace(GL_CW);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+
+	glEnable(GL_DEPTH_TEST);
+
+	glEnable(GL_FRAMEBUFFER_SRGB);
 
 	// Initialize Timing Vars
 	time = 0.0;

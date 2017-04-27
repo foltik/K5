@@ -4,9 +4,10 @@ CDemoFrame CDemoFrame::pInstance;
 
 void CDemoFrame::Init(SDL_Renderer* renderer) {
 	rnd = renderer;
-
-	bkg = SDL_LoadBMP("res/test.bmp");
+	bkg = SDL_LoadBMP("res/test2.bmp");
 	tex = SDL_CreateTextureFromSurface(rnd, bkg);
+
+	vertex3f data[3] = {vec3f(-1, -1, 0), vec3f(0, 1, 0), vec3f(-1, 1, 0)};
 }
 
 void CDemoFrame::Cleanup() {
@@ -44,7 +45,6 @@ void CDemoFrame::Loop(CEngine* engine) {
 
 void CDemoFrame::Render(CEngine* engine) {
 	SDL_RenderClear(rnd);
-
 	SDL_RenderCopy(rnd, tex, NULL, NULL);
 
 	SDL_Rect rect = {x, 512, 100, 100};

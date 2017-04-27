@@ -1,6 +1,13 @@
 #pragma once
 #include "k5.h"
 
+struct Drop {
+public:
+	vec2f pos;
+	float vel;
+	float len;
+};
+
 class CTransFrame : public CFrame {
 public:
 	void Init(SDL_Renderer* renderer);
@@ -19,6 +26,8 @@ public:
 protected:
 	CTransFrame() {}
 private:
+	std::vector<Drop> drops;
+
 	SDL_Surface* bkg;
 	SDL_Texture* tex;
 
