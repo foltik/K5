@@ -42,7 +42,6 @@ vec3f vec3f::cross(vec3f v) {
 	return vec3f(X, Y, Z);
 }
 
-#pragma region Operator Overloads
 inline bool vec3f::operator==(const vec3f& v) const {
 	return (x == v.x && y == v.y && z == v.z);
 }
@@ -106,4 +105,3 @@ inline vec3f vec3f::operator/(const vec3f& v) const {
 	res.z = z / v.z;
 	return res;
 }
-#pragma endregion

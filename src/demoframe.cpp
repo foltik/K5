@@ -22,32 +22,41 @@ void CDemoFrame::PollEvents(CEngine* engine) {
 	SDL_Event e;
 	if (SDL_PollEvent(&e)) {
 		switch (e.type) {
-		case SDL_QUIT:
-			engine->Quit();
-			break;
-		case SDL_KEYDOWN:
-			switch (e.key.keysym.sym) {
-			case SDLK_ESCAPE:
-					engine->Quit();
-					break;
-			case SDLK_SPACE:
-					engine->ChangeFrame(CTransFrame::Instance());
-					break;
-			}
+			case SDL_QUIT:
+				engine->Quit();
+				break;
+			case SDL_KEYDOWN:
+			case SDL_KEYUP:
+				switch (e.key.keysym.sym) {
+					case SDLK_ESCAPE:
+						if (e.type == SDL_KEYDOWN)
+							engine->Quit();
+						break;
+					case SDLK_SPACE:
+						if (e.type == SDL_KEYDOWN)
+							engine->ChangeFrame(CTransFrame::Instance());
+						break;
+					case 'w': w = e.type == SDL_KEYDOWN; break;
+					case 'a': a = e.type == SDL_KEYDOWN; break;
+					case 's': s = e.type == SDL_KEYDOWN; break;
+					case 'd': d = e.type == SDL_KEYDOWN; break;
+				}
 		}
 	}
 }
 
 void CDemoFrame::Loop(CEngine* engine) {
-	if (x < 1500) x++;
-	else x = 0;
+	if (w) y--;
+	if (a) x--;
+	if (s) y++;
+	if (d) x++;
 }
 
 void CDemoFrame::Render(CEngine* engine) {
 	SDL_RenderClear(rnd);
 	SDL_RenderCopy(rnd, tex, NULL, NULL);
 
-	SDL_Rect rect = {x, 512, 100, 100};
+	SDL_Rect rect = {x, y, 100, 100};
 	SDL_RenderDrawRect(rnd, &rect);
 
 	SDL_RenderPresent(rnd);

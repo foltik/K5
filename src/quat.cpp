@@ -22,7 +22,6 @@ quat quat::conjugate() {
 	return quat(-x, -y, -z, w);
 }
 
-#pragma region Operator Overloads
 inline bool quat::operator==(const quat& q) const {
 	return (x == q.x && y == q.y && z == q.z && w == q.w);
 }
@@ -66,4 +65,3 @@ inline quat quat::operator/(float s) const {
 	res.w = w / s;
 	return res;
 }
-#pragma endregion
