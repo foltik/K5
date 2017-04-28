@@ -1,14 +1,7 @@
 #pragma once
 #define GLEW_STATIC
-#ifdef __linux__
-#include "GL/glew.h"
-#include "GLFW/glfw3.h"
-#elif _WIN32
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#else
-#error Unsupported Platform
-#endif
 
 #include <cstdio>
 #include <vector>
