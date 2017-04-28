@@ -2,41 +2,59 @@
 
 #include "frame.h"
 
-CEngine::CEngine(const char* title, unsigned int px, unsigned int py, unsigned int width, unsigned int height, bool fullscreen) {
+CEngine::CEngine(GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
+	// Set the required local variables to initialize everything later in Init();
 	running = true;
 	wndTitle = title;
-	wndX = px;
-	wndY = py;
 	wndW = width;
 	wndH = height;
 	wndFull = fullscreen;
 }
 
 bool CEngine::Init() {
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) return false;
-	if ((wnd = SDL_CreateWindow(wndTitle, wndX, wndY, wndW, wndH, wndFull ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_SHOWN)) == NULL) return false;
-	if ((rnd = SDL_CreateRenderer(wnd, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)) == NULL) return false;
+	printf("Starting OpenGL 3.3 Context\n");
 
-	glFrontFace(GL_CW);
-	glCullFace(GL_BACK);
-	glEnable(GL_CULL_FACE);
+	// Initialize GLFW and set the target version
+	glfwInit();
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	glEnable(GL_DEPTH_TEST);
+	// Create and set the context as active
+	wnd = glfwCreateWindow(wndW, wndH, wndTitle, wndFull ? mon : NULL, NULL);
+	if (wnd == NULL) {
+		printf("GLFW Window Creation Failed\n");
+		return false;
+	}
+	glfwMakeContextCurrent(wnd);
 
-	glEnable(GL_FRAMEBUFFER_SRGB);
+	// Initialize GLEW
+	glewExperimental = GL_TRUE;
+	if (glewInit() != GLEW_OK) {
+		printf("GLEW Initialization Failed\n");
+		return false;
+	}
+
+	// Retrieve the window size and create the OpenGL viewport accordingly
+	int width, height;
+	glfwGetFramebufferSize(wnd, &width, &height);
+	glViewport(0, 0, width, height);
 
 	// Initialize Timing Vars
-	time = 0.0;
-	lastTime = SDL_GetTicks() / 1000.0;
-	accumulator = 0.0;
+	delta = std::chrono::duration<long long, std::nano>(16666667);
+	accumulator = std::chrono::duration<long long, std::nano>(0);
+	currentTime = std::chrono::steady_clock::now();
+	lastTime = std::chrono::steady_clock::now();
 
 	return true;
 }
 
 void CEngine::Tick() {
-	double currentTime = SDL_GetTicks() / 1000.0;
-	double frameTime = currentTime - lastTime;
-	lastTime = currentTime;
+	// Get frame time
+	currentTime = std::chrono::steady_clock::now();
+	frameTime = currentTime - lastTime; 
+	lastTime = std::chrono::steady_clock::now();
 
 	accumulator += frameTime;
 
@@ -44,22 +62,22 @@ void CEngine::Tick() {
 		PollEvents();
 		Loop();
 		accumulator -= delta;
-		time += delta;
+		runTime += delta;
 	}
 
 	Render();
 }
 
 void CEngine::PollEvents() {
-	frames.back()->PollEvents(this);
+	frames.back()->PollEvents();
 }
 
 void CEngine::Loop() {
-	frames.back()->Loop(this);
+	frames.back()->Loop();
 }
 
 void CEngine::Render() {
-	frames.back()->Render(this);
+	frames.back()->Render();
 }
 
 void CEngine::Cleanup() {
@@ -67,7 +85,7 @@ void CEngine::Cleanup() {
 		frames.back()->Cleanup();
 		frames.pop_back();
 	}
-	SDL_Quit();
+	glfwTerminate();
 }
 
 void CEngine::ChangeFrame(CFrame* frame) {
@@ -77,14 +95,14 @@ void CEngine::ChangeFrame(CFrame* frame) {
 	}
 
 	frames.push_back(frame);
-	frames.back()->Init(rnd);
+	frames.back()->Init();
 }
 
 void CEngine::PushFrame(CFrame* frame) {
 	if (!frames.empty()) frames.back()->Pause();
 
 	frames.push_back(frame);
-	frames.back()->Init(rnd);
+	frames.back()->Init();
 }
 
 void CEngine::PopFrame() {

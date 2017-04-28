@@ -34,7 +34,7 @@ vec2f vec2f::normalized() {
 
 vec2f vec2f::rotated(float angle) {
 	// Convert angle to radians
-	angle *= M_PI / 180;
+	angle *= (float)M_PI / 180;
 	float sin = std::sin(angle);
 	float cos = std::cos(angle);
 	return vec2f(x * cos - y * sin, x * sin + y * cos);

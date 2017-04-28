@@ -1,30 +1,20 @@
 #pragma once
+#define GLEW_STATIC
 #ifdef __linux__
-#define GL_GLEXT_PROTOTYPES
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_opengl.h"
-#include "SDL2/SDL_ttf.h"
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
 #elif _WIN32
-#define GL_GLEXT_PROTOTYPES
-#include <SDL2/SDL.h>
-#pragma comment(lib, "SDL2.lib")
-#include <SDL2/SDL_opengl.h>
-#pragma comment(lib, "opengl32.lib")
-#include <SDL2/SDL_ttf.h>
-#pragma comment(lib, "SDL2_ttf.lib")
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #else
 #error Unsupported Platform
 #endif
 
+#include <cstdio>
 #include <vector>
+#include <chrono>
 
-#include "quat.h"
-#include "mat4f.h"
-#include "vec2f.h"
-#include "vec3f.h"
-
-#define FRAME_CAP 240
-#define FRAME_TIME 1.0 / FRAME_CAP
+#include "datatypes.h"
 
 #define K5_EXIT_SUCCESS 0
 #define K5_EXIT_FAILURE 1
@@ -33,7 +23,7 @@ class CFrame;
 
 class CEngine {
 public:
-	CEngine(const char* title, unsigned int px, unsigned int py, unsigned int width, unsigned int height, bool fullscreen);
+	CEngine(GLchar* title, GLuint width, GLuint height, GLboolean fullscreen);
 
 	bool Init();
 	void Cleanup();
@@ -48,11 +38,12 @@ public:
 	void Loop();
 	void Render();
 
-	SDL_Window* wnd;
-	SDL_Renderer* rnd;
+	GLFWmonitor* mon;
+	GLFWwindow* wnd;
 
 	bool Running() { return running; }
 	void Quit() { running = false; }
+
 private:
 	bool running;
 
@@ -61,18 +52,19 @@ private:
 	//-----------------------------
 	// Timing Vars
 	//-----------------------------	
-	const double delta = 1.0 / 60.0;
-	double time;
-	double lastTime;
-	double accumulator;
+	std::chrono::duration<long long, std::nano> delta;
+	std::chrono::duration<long long, std::nano> runTime;
+	std::chrono::time_point<std::chrono::steady_clock> currentTime;
+	std::chrono::time_point<std::chrono::steady_clock> lastTime;
+	std::chrono::duration<long long, std::nano> frameTime;
+	std::chrono::duration<long long, std::nano> accumulator;
+	
 
 	//-----------------------------
 	// Window Data
 	//-----------------------------
-	const char* wndTitle;
-	unsigned int wndX;
-	unsigned int wndY;
-	unsigned int wndW;
-	unsigned int wndH;
-	bool wndFull;
+	GLchar* wndTitle;
+	GLuint wndW;
+	GLuint wndH;
+	GLboolean wndFull;
 };

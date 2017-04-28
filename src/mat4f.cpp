@@ -5,7 +5,7 @@ mat4f::mat4f() {}
 mat4f mat4f::identity() {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
-			mat[i][j] = j == i ? 1 : 0;
+			mat[i][j] = j == i ? 1.0f : 0.0f;
 		}
 	}
 	return *this;
