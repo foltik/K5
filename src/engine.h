@@ -16,7 +16,7 @@ class CFrame;
 
 class CEngine {
 public:
-	CEngine(GLchar* title, GLuint width, GLuint height, GLboolean fullscreen);
+	CEngine(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen);
 
 	bool Init();
 	void Cleanup();
@@ -56,7 +56,7 @@ private:
 	//-----------------------------
 	// Window Data
 	//-----------------------------
-	GLchar* wndTitle;
+	const GLchar* wndTitle;
 	GLuint wndW;
 	GLuint wndH;
 	GLboolean wndFull;

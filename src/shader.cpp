@@ -9,8 +9,8 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 
 	try {
 		// Open files for reading
-		vertexFile.open(vertexPath);
-		fragmentFile.open(fragmentPath);
+		vertexFile.open(vertexPath, std::ios::in);
+		fragmentFile.open(fragmentPath, std::ios::in);
 
 		// Copy contents into stream
 		std::stringstream vertexStream, fragmentStream;
@@ -50,6 +50,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	{
 		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
 		printf("Error: Shader Compilation Failed\n%s", infoLog);
+		printf("---CODE---\n%s\n", vertexSource);
 	}
 
 
@@ -64,6 +65,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	{
 		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
 		printf("Error: Shader Compilation Failed\n%s", infoLog);
+		printf("---CODE---\n%s\n", fragmentSource);
 	}
 
 

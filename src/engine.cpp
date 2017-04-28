@@ -2,7 +2,7 @@
 
 #include "frame.h"
 
-CEngine::CEngine(GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
+CEngine::CEngine(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
 	// Set the required local variables to initialize everything later in Init();
 	running = true;
 	wndTitle = title;

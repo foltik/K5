@@ -36,5 +36,10 @@ resource:
 	cp -r res $(BUILDDIR)/linux/release
 	cp -r res $(BUILDDIR)/linux/debug
 
+install:
+	sudo mkdir -p /usr/include/k5
+	sudo cp -r src/*.h /usr/include/k5/
+	sudo cp build/linux/release/k5.a /usr/lib64/
+
 clean:
 	rm -rf build
