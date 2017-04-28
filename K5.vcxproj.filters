@@ -39,6 +39,9 @@
     <ClCompile Include="src\mesh.cpp">
       <Filter>Resource Files\Datatypes</Filter>
     </ClCompile>
+    <ClCompile Include="src\shader.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\k5.h">
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="src\datatypes.h">
       <Filter>Resource Files\Datatypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shader.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

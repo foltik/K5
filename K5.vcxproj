@@ -121,7 +121,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)build\windows\Debug\k5.lib" "D:\usr\lib\x64\"
-copy "$(SolutionDir)src\*.h" "D:\usr\include\"</Command>
+copy "$(SolutionDir)src\*.h" "D:\usr\include\k5"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>
@@ -161,6 +161,7 @@ copy "$(SolutionDir)src\*.h" "D:\usr\include\"</Command>
     <ClCompile Include="src\mat4f.cpp" />
     <ClCompile Include="src\mesh.cpp" />
     <ClCompile Include="src\quat.cpp" />
+    <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\vec2f.cpp" />
     <ClCompile Include="src\vec3f.cpp" />
     <ClCompile Include="src\vertex3f.cpp" />
@@ -169,6 +170,7 @@ copy "$(SolutionDir)src\*.h" "D:\usr\include\"</Command>
     <ClInclude Include="src\datatypes.h" />
     <ClInclude Include="src\engine.h" />
     <ClInclude Include="src\frame.h" />
+    <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\k5.h" />
     <ClInclude Include="src\mat4f.h" />
     <ClInclude Include="src\mesh.h" />
