@@ -7,8 +7,6 @@
 #include <vector>
 #include <chrono>
 
-#include "datatypes.h"
-
 #define K5_EXIT_SUCCESS 0
 #define K5_EXIT_FAILURE 1
 
@@ -27,9 +25,11 @@ public:
 
 	void Tick();
 
-	void PollEvents();
+	void ProcessInput();
 	void Loop();
 	void Render();
+
+	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 	GLFWmonitor* mon;
 	GLFWwindow* wnd;
@@ -41,6 +41,8 @@ private:
 	bool running;
 
 	std::vector<CFrame*> frames;
+
+	static bool keyboard[1024];
 
 	//-----------------------------
 	// Timing Vars

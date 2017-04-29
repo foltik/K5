@@ -2,6 +2,8 @@
 
 #include "frame.h"
 
+bool CEngine::keyboard[1024];
+
 CEngine::CEngine(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
 	// Set the required local variables to initialize everything later in Init();
 	running = true;
@@ -47,7 +49,16 @@ bool CEngine::Init() {
 	currentTime = std::chrono::steady_clock::now();
 	lastTime = std::chrono::steady_clock::now();
 
+	glfwSetKeyCallback(wnd, key_callback);
+
 	return true;
+}
+
+void CEngine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (action == GLFW_PRESS)
+		keyboard[key] = true;
+	else if (action == GLFW_RELEASE)
+		keyboard[key] = false;
 }
 
 void CEngine::Tick() {
@@ -59,17 +70,18 @@ void CEngine::Tick() {
 	accumulator += frameTime;
 
 	while (accumulator > delta) {
-		PollEvents();
+		ProcessInput();
 		Loop();
 		accumulator -= delta;
 		runTime += delta;
 	}
 
+	glfwPollEvents();
 	Render();
 }
 
-void CEngine::PollEvents() {
-	frames.back()->PollEvents();
+void CEngine::ProcessInput() {
+	frames.back()->ProcessInput(keyboard);
 }
 
 void CEngine::Loop() {
@@ -85,6 +97,9 @@ void CEngine::Cleanup() {
 		frames.back()->Cleanup();
 		frames.pop_back();
 	}
+
+	delete[] keyboard;
+
 	glfwTerminate();
 }
 

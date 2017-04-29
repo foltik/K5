@@ -10,7 +10,7 @@ public:
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
 
-	virtual void PollEvents() = 0;
+	virtual void ProcessInput(bool* keyboard) = 0;
 	virtual void Loop() = 0;
 	virtual void Render() = 0;
 

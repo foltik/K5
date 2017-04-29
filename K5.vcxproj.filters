@@ -13,31 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="Resource Files\Datatypes">
-      <UniqueIdentifier>{166c92f3-6316-4101-8976-ed86fce7ff3e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\engine.cpp">
       <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\mat4f.cpp">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\quat.cpp">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vec2f.cpp">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vec3f.cpp">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vertex3f.cpp">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\mesh.cpp">
-      <Filter>Resource Files\Datatypes</Filter>
     </ClCompile>
     <ClCompile Include="src\shader.cpp">
       <Filter>Resource Files</Filter>
@@ -52,27 +31,6 @@
     </ClInclude>
     <ClInclude Include="src\engine.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\mat4f.h">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\quat.h">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\vec2f.h">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\vec3f.h">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\vertex3f.h">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\mesh.h">
-      <Filter>Resource Files\Datatypes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\datatypes.h">
-      <Filter>Resource Files\Datatypes</Filter>
     </ClInclude>
     <ClInclude Include="src\shader.h">
       <Filter>Resource Files</Filter>
