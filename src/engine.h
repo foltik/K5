@@ -30,6 +30,7 @@ public:
 	void Render();
 
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 	GLFWmonitor* mon;
 	GLFWwindow* wnd;
@@ -42,6 +43,7 @@ private:
 
 	std::vector<CFrame*> frames;
 
+	static double mxpos, mypos;
 	static bool keyboard[1024];
 
 	//-----------------------------

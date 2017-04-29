@@ -2,6 +2,9 @@
 
 #include "frame.h"
 
+double CEngine::mxpos;
+double CEngine::mypos;
+
 bool CEngine::keyboard[1024];
 
 CEngine::CEngine(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
@@ -50,6 +53,8 @@ bool CEngine::Init() {
 	lastTime = std::chrono::steady_clock::now();
 
 	glfwSetKeyCallback(wnd, key_callback);
+	glfwSetCursorPosCallback(wnd, mouse_callback);
+	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	return true;
 }
@@ -59,6 +64,11 @@ void CEngine::key_callback(GLFWwindow* window, int key, int scancode, int action
 		keyboard[key] = true;
 	else if (action == GLFW_RELEASE)
 		keyboard[key] = false;
+}
+
+void CEngine::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+	mxpos = xpos;
+	mypos = ypos;
 }
 
 void CEngine::Tick() {
@@ -81,7 +91,7 @@ void CEngine::Tick() {
 }
 
 void CEngine::ProcessInput() {
-	frames.back()->ProcessInput(keyboard);
+	frames.back()->ProcessInput(keyboard, mxpos, mypos);
 }
 
 void CEngine::Loop() {
@@ -97,8 +107,6 @@ void CEngine::Cleanup() {
 		frames.back()->Cleanup();
 		frames.pop_back();
 	}
-
-	delete[] keyboard;
 
 	glfwTerminate();
 }
