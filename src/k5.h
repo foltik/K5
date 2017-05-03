@@ -4,3 +4,4 @@
 #include "frame.h"
 
 #include "shader.h"
+#include "texture.h"
