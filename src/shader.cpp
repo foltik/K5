@@ -88,3 +88,27 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	glDeleteShader(fragmentShader);
 
 }
+
+void Shader::uFloat(const GLchar* name, GLfloat value) {
+	glUniform1f(glGetUniformLocation(this->program, name), value);
+}
+
+void Shader::uVector3(const GLchar* name, GLfloat x, GLfloat y, GLfloat z) {
+	glUniform3f(glGetUniformLocation(this->program, name), x, y, z);
+}
+
+void Shader::uVector3(const GLchar* name, glm::vec3* value) {
+	glUniform3f(glGetUniformLocation(this->program, name), value->x, value->y, value->z);
+}	
+
+void Shader::uVector4(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
+	glUniform4f(glGetUniformLocation(this->program, name), x, y, z, w);
+}
+
+void Shader::uVector4(const GLchar* name, glm::vec4* value) {
+	glUniform4f(glGetUniformLocation(this->program, name), value->x, value->y, value->z, value->w);
+}
+
+void Shader::uMatrix4(const GLchar* name, glm::mat4* value) {
+	glUniformMatrix4fv(glGetUniformLocation(this->program, name), 1, GL_FALSE, glm::value_ptr(*value));
+}
