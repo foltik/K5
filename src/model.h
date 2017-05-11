@@ -1,23 +1,25 @@
 #pragma once
+#include <vector>
+
 #include <GL/glew.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 #include "mesh.h"
 #include "shader.h"
 
 class Model {
 public:
-	Model(GLchar* path);
+	Model(const GLchar* path);
 
-	void Draw(Shader shader);
+	void Draw(const Shader* shader);
 private:
-	void genModel(GLchar* path);
+	void genModel(const GLchar* path);
 
-	void processNode();
-	void processMesh();
+	void processNode(aiNode* node, const aiScene* scene);
+	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 	
 	std::vector<Texture> loadTextures();
-	
 	std::vector<Mesh> meshes;
 };

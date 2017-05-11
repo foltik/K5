@@ -24,6 +24,12 @@
     <ClCompile Include="src\mesh.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\model.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\k5.h">
@@ -39,6 +45,12 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="src\mesh.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texture.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,14 +11,14 @@
 struct Vertex {
 	glm::vec3 pos;
 	glm::vec3 norm;
-	glm::vec2 texCoords;
+	glm::vec2 tex;
 };
 
 class Mesh {
 public:
 	Mesh(std::vector<Vertex> verts, std::vector<GLuint> inds, std::vector<Texture> texs);
 
-	void Draw(Shader shader);
+	void Draw(const Shader* shader);
 
 	std::vector<Vertex> verticies;
 	std::vector<GLuint> indicies;
