@@ -5,8 +5,8 @@ Model::Model(const char* path) {
 }
 
 void Model::Draw(const Shader* shader) {
-	for (GLuint i = 0; i < meshes.size(); i++)
-		meshes[i].Draw(shader);
+	for (auto &mesh : meshes)
+		mesh.Draw(shader);
 }
 
 void Model::genModel(const char* path) {

@@ -8,7 +8,7 @@ Texture::Texture(const char* path) {
 	glBindTexture(GL_TEXTURE_2D, this->texture);
 
 	// Load the texture
-	unsigned char* data = SOIL_load_image(path, &width, &height, 0, SOIL_LOAD_RGB);
+	unsigned char* data = SOIL_load_image(path, &width, &height, nullptr, SOIL_LOAD_RGB);
 	if (data == nullptr) {
 		printf("Error//TextureLoad: Texture %s failed to load\n", path);
 		return;

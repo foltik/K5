@@ -22,7 +22,7 @@ public:
 		engine = e;
 	}
 protected:
-	CFrame() {}
+	CFrame() = default;
 
 	CEngine* engine;
 };

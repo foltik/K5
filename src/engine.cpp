@@ -28,8 +28,8 @@ bool CEngine::Init() {
 	glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE);
 
 	// Create and set the context as active
-	wnd = glfwCreateWindow(wndW, wndH, wndTitle, wndFull ? mon : NULL, NULL);
-	if (wnd == NULL) {
+	wnd = glfwCreateWindow(wndW, wndH, wndTitle, wndFull ? mon : nullptr, nullptr);
+	if (wnd == nullptr) {
 		printf("GLFW Window Creation Failed\n");
 		return false;
 	}

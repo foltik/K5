@@ -11,11 +11,11 @@
 
 class Model {
 public:
-	Model(const GLchar* path);
+	Model(const char* path);
 
 	void Draw(const Shader* shader);
 private:
-	void genModel(const GLchar* path);
+	void genModel(const char* path);
 
 	void processNode(aiNode* node, const aiScene* scene);
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
