@@ -16,7 +16,7 @@ public:
 	void uVector4(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 	void uVector4(const GLchar* name, const glm::vec4& value);
 	void uMatrix4(const GLchar* name, const glm::mat4& value);
-	
+
 	void Use() { glUseProgram(program); }
 
 	GLuint program;

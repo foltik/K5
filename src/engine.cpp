@@ -17,8 +17,6 @@ CEngine::CEngine(const GLchar* title, GLuint width, GLuint height, GLboolean ful
 }
 
 bool CEngine::Init() {
-	printf("Starting OpenGL 3.3 Context\n");
-
 	// Initialize GLFW and set the target version
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -30,7 +28,7 @@ bool CEngine::Init() {
 	// Create and set the context as active
 	wnd = glfwCreateWindow(wndW, wndH, wndTitle, wndFull ? mon : nullptr, nullptr);
 	if (wnd == nullptr) {
-		printf("GLFW Window Creation Failed\n");
+		printf("Error//Lib: GLFW Window Creation Failed\n");
 		return false;
 	}
 	glfwMakeContextCurrent(wnd);
@@ -38,7 +36,7 @@ bool CEngine::Init() {
 	// Initialize GLEW
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
-		printf("GLEW Initialization Failed\n");
+		printf("Error//Lib: GLEW Initialization Failed\n");
 		return false;
 	}
 

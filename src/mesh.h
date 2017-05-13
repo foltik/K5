@@ -18,7 +18,7 @@ class Mesh {
 public:
 	Mesh(std::vector<Vertex> verts, std::vector<GLuint> inds, std::vector<Texture> texs);
 
-	void Draw(const Shader* shader);
+	void Draw(Shader* shader);
 
 	std::vector<Vertex> verticies;
 	std::vector<GLuint> indicies;

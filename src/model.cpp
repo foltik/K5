@@ -4,8 +4,8 @@ Model::Model(const char* path) {
 	genModel(path);
 }
 
-void Model::Draw(const Shader* shader) {
-	for (auto &mesh : meshes)
+void Model::Draw(Shader* shader) {
+	for (auto &mesh : m_meshes)
 		mesh.Draw(shader);
 }
 
@@ -17,13 +17,16 @@ void Model::genModel(const char* path) {
 		printf("Error//ModelLoad: %s\n", importer.GetErrorString());
 		return;
 	}
+
+	m_dir = std::string(path).substr(0, std::string(path).find_last_of('/'));
+
 	processNode(scene->mRootNode, scene);
 }
 
 void Model::processNode(aiNode* node, const aiScene* scene) {
 	for (GLuint i = 0; i < node->mNumMeshes; i++) {
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshes.push_back(processMesh(mesh, scene));
+		m_meshes.push_back(processMesh(mesh, scene));
 	}
 
 	for (GLuint i = 0; i < node->mNumChildren; i++) {
@@ -74,6 +77,48 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		indices.push_back(face.mIndices[1]);
 		indices.push_back(face.mIndices[2]);
 	}
+	
+	// Load materials
+	if (mesh->mMaterialIndex >= 0) {
+		aiMaterial* mat = scene->mMaterials[mesh->mMaterialIndex];
+
+		std::vector<Texture> diffMaps = loadTextures(mat, aiTextureType_DIFFUSE, "diffuse");
+		textures.insert(textures.end(), diffMaps.begin(), diffMaps.end());
+
+		std::vector<Texture> specMaps = loadTextures(mat, aiTextureType_SPECULAR, "specular");
+		textures.insert(textures.end(), specMaps.begin(), specMaps.end());
+	}
 
 	return Mesh(verts, indices, textures);
+}
+
+std::vector<Texture> Model::loadTextures(aiMaterial * mat, aiTextureType type, std::string typeName)
+{
+	std::vector<Texture> textures;
+
+	for (GLuint i = 0; i < mat->GetTextureCount(type); i++) {
+		aiString str;
+		mat->GetTexture(type, i, &str);
+		
+		for (GLuint j = 0; j < loadedTextures.size(); j++) {
+			if (std::strcmp(loadedTextures[j].m_path.c_str(), str.C_Str()) == 0) {
+				textures.push_back(loadedTextures[j]);
+				return textures;
+			}
+		}
+
+		std::string fileStr = str.C_Str();
+		fileStr = fileStr.substr(fileStr.find_last_of(R"(/\)") + 1);
+
+		Texture tex(fileStr.c_str(), m_dir.c_str());
+		tex.type = typeName;
+
+		textures.push_back(tex);
+		loadedTextures.push_back(tex);
+
+
+		return textures;
+	}
+
+	return textures;
 }

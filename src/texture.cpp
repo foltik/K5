@@ -1,6 +1,20 @@
 #include "texture.h"
 
 Texture::Texture(const char* path) {
+	genTexture(path);
+}
+
+Texture::Texture(const char* path, const char* dir)
+{
+	genTexture((std::string(dir) + '/' + std::string(path)).c_str());
+}
+
+void Texture::Use() {
+	glBindTexture(GL_TEXTURE_2D, this->texture);
+}
+
+void Texture::genTexture(const char* path)
+{
 	// Generate the texture object for OpenGL
 	glGenTextures(1, &texture);
 
@@ -18,11 +32,13 @@ Texture::Texture(const char* path) {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
+	// Set texture parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 	// Free the texture data and unbind the texture object
 	SOIL_free_image_data(data);
 	glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-void Texture::Use() {
-	glBindTexture(GL_TEXTURE_2D, this->texture);
 }

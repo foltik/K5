@@ -7,6 +7,9 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	std::ifstream vertexFile;
 	std::ifstream fragmentFile;
 
+	vertexFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	fragmentFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
 	try {
 		// Open files for reading
 		vertexFile.open(vertexPath, std::ios::in);
@@ -25,9 +28,9 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 		vertexCode = vertexStream.str();
 		fragmentCode = fragmentStream.str();
 	}
-	catch (std::ifstream::failure e)
+	catch (const std::ifstream::failure& e)
 	{
-		printf("Error: Shader files could not be successfully read\n");
+		printf("Error//ShaderLoad: %s\n", e.what());
 	}
 
 	// Get C strings from strings
@@ -49,8 +52,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
-		printf("Error: Shader Compilation Failed\n%s", infoLog);
-		printf("---CODE---\n%s\n", vertexSource);
+		printf("Error//ShaderCompile: %s\n", infoLog);
 	}
 
 
@@ -64,8 +66,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
-		printf("Error: Shader Compilation Failed\n%s", infoLog);
-		printf("---CODE---\n%s\n", fragmentSource);
+		printf("Error//ShaderCompile: %s\n", infoLog);
 	}
 
 
@@ -80,7 +81,7 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	if (!success)
 	{
 		glGetProgramInfoLog(program, 512, nullptr, infoLog);
-		printf("Error: Shader Program Linking Failed\n%s", infoLog);
+		printf("Error//ShaderLink: %s\n", infoLog);
 	}
 
 	// Clean up shader objects
@@ -90,25 +91,25 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 }
 
 void Shader::uFloat(const GLchar* name, GLfloat value) {
-	glUniform1f(glGetUniformLocation(this->program, name), value);
+	glUniform1f(glGetUniformLocation(program, name), value);
 }
 
 void Shader::uVector3(const GLchar* name, GLfloat x, GLfloat y, GLfloat z) {
-	glUniform3f(glGetUniformLocation(this->program, name), x, y, z);
+	glUniform3f(glGetUniformLocation(program, name), x, y, z);
 }
 
 void Shader::uVector3(const GLchar* name, const glm::vec3& value) {
-	glUniform3f(glGetUniformLocation(this->program, name), value.x, value.y, value.z);
+	glUniform3f(glGetUniformLocation(program, name), value.x, value.y, value.z);
 }	
 
 void Shader::uVector4(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
-	glUniform4f(glGetUniformLocation(this->program, name), x, y, z, w);
+	glUniform4f(glGetUniformLocation(program, name), x, y, z, w);
 }
 
 void Shader::uVector4(const GLchar* name, const glm::vec4& value) {
-	glUniform4f(glGetUniformLocation(this->program, name), value.x, value.y, value.z, value.w);
+	glUniform4f(glGetUniformLocation(program, name), value.x, value.y, value.z, value.w);
 }
 
 void Shader::uMatrix4(const GLchar* name, const glm::mat4& value) {
-	glUniformMatrix4fv(glGetUniformLocation(this->program, name), 1, GL_FALSE, glm::value_ptr(value));
+	glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_FALSE, glm::value_ptr(value));
 }

@@ -8,11 +8,32 @@ Mesh::Mesh(std::vector<Vertex> verts, std::vector<GLuint> inds, std::vector<Text
 	genMesh();
 }
 
-void Mesh::Draw(const Shader* shader) {
-	// TODO: TEXTURES
+void Mesh::Draw(Shader* shader) {
+	int diffuse = 1;
+	int specular = 1;
+
+	for (int i = 0; i < textures.size(); i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		std::string name = textures[i].type;
+		std::string number = std::to_string(name == "diffuse" ? diffuse++ : specular++);
+		std::string var = "texture_" + name + number;
+
+		//shader->uFloat(var.c_str(), (GLfloat)i);
+		glUniform1i(glGetUniformLocation(shader->program, var.c_str()), i);
+		glBindTexture(GL_TEXTURE_2D, textures[i].texture);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	shader->uFloat("material.shine", 16.0f);
+
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, (GLsizei)indicies.size(), GL_UNSIGNED_INT, (GLvoid*)0);
 	glBindVertexArray(0);
+
+	for (int i = 0; i < textures.size(); i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 }
 
 void Mesh::genMesh() {
