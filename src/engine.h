@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <cstdio>
-#include <vector>
+#include <stack>
 #include <chrono>
 
 #define K5_EXIT_SUCCESS 0
@@ -41,7 +41,7 @@ public:
 private:
 	bool running;
 
-	std::vector<CFrame*> frames;
+	std::stack<CFrame*> frames;
 
 	static double mxpos, mypos;
 	static bool keyboard[1024];

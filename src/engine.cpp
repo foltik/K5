@@ -90,21 +90,21 @@ void CEngine::Tick() {
 }
 
 void CEngine::ProcessInput() {
-	frames.back()->ProcessInput(keyboard, mxpos, mypos);
+	frames.top()->ProcessInput(keyboard, mxpos, mypos);
 }
 
 void CEngine::Loop() {
-	frames.back()->Loop();
+	frames.top()->Loop();
 }
 
 void CEngine::Render() {
-	frames.back()->Render();
+	frames.top()->Render();
 }
 
 void CEngine::Cleanup() {
 	while (!frames.empty()) {
-		frames.back()->Cleanup();
-		frames.pop_back();
+		frames.top()->Cleanup();
+		frames.pop();
 	}
 
 	glfwTerminate();
@@ -112,26 +112,28 @@ void CEngine::Cleanup() {
 
 void CEngine::ChangeFrame(CFrame* frame) {
 	if (!frames.empty()) {
-		frames.back()->Cleanup();
-		frames.pop_back();
+		frames.top()->Cleanup();
+		frames.pop();
 	}
 
-	frames.push_back(frame);
-	frames.back()->Init();
+	frames.push(frame);
+	frames.top()->Init();
 }
 
 void CEngine::PushFrame(CFrame* frame) {
-	if (!frames.empty()) frames.back()->Pause();
+	if (!frames.empty()) 
+		frames.top()->Pause();
 
-	frames.push_back(frame);
-	frames.back()->Init();
+	frames.push(frame);
+	frames.top()->Init();
 }
 
 void CEngine::PopFrame() {
 	if (!frames.empty()) {
-		frames.back()->Cleanup();
-		frames.pop_back();
+		frames.top()->Cleanup();
+		frames.pop();
 	}
 
-	if (!frames.empty()) frames.back()->Resume();
+	if (!frames.empty()) 
+		frames.top()->Resume();
 }
