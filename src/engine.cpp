@@ -45,12 +45,11 @@ bool CEngine::Init() {
 	glfwGetFramebufferSize(wnd, &width, &height);
 	glViewport(0, 0, width, height);
 
-	// Initialize Timing Vars
-	delta = std::chrono::duration<long long, std::nano>(16666667);
-	accumulator = std::chrono::duration<long long, std::nano>(0);
-	currentTime = std::chrono::steady_clock::now();
+	// Initialize starting time so the first tick doesn't last forever
 	lastTime = std::chrono::steady_clock::now();
+	currentTime = std::chrono::steady_clock::now();
 
+	// Key Callbacks
 	glfwSetKeyCallback(wnd, key_callback);
 	glfwSetCursorPosCallback(wnd, mouse_callback);
 	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -110,22 +109,22 @@ void CEngine::Cleanup() {
 	glfwTerminate();
 }
 
-void CEngine::ChangeFrame(CFrame* frame) {
+void CEngine::ChangeFrame(IFrame* frame) {
 	if (!frames.empty()) {
 		frames.top()->Cleanup();
 		frames.pop();
 	}
 
 	frames.push(frame);
-	frames.top()->Init();
+	frames.top()->Init(this);
 }
 
-void CEngine::PushFrame(CFrame* frame) {
+void CEngine::PushFrame(IFrame* frame) {
 	if (!frames.empty()) 
 		frames.top()->Pause();
 
 	frames.push(frame);
-	frames.top()->Init();
+	frames.top()->Init(this);
 }
 
 void CEngine::PopFrame() {

@@ -10,7 +10,7 @@
 #define K5_EXIT_SUCCESS 0
 #define K5_EXIT_FAILURE 1
 
-class CFrame;
+class IFrame;
 
 class CEngine {
 public:
@@ -19,8 +19,8 @@ public:
 	bool Init();
 	void Cleanup();
 
-	void ChangeFrame(CFrame* frame);
-	void PushFrame(CFrame* frame);
+	void ChangeFrame(IFrame* frame);
+	void PushFrame(IFrame* frame);
 	void PopFrame();
 
 	void Tick();
@@ -41,21 +41,22 @@ public:
 private:
 	bool running;
 
-	std::stack<CFrame*> frames;
+	std::stack<IFrame*> frames;
 
 	static double mxpos, mypos;
 	static bool keyboard[1024];
 
-	//-----------------------------
-	// Timing Vars
-	//-----------------------------	
-	std::chrono::duration<long long, std::nano> delta;
-	std::chrono::duration<long long, std::nano> runTime;
-	std::chrono::time_point<std::chrono::steady_clock> currentTime;
-	std::chrono::time_point<std::chrono::steady_clock> lastTime;
-	std::chrono::duration<long long, std::nano> frameTime;
-	std::chrono::duration<long long, std::nano> accumulator;
+	typedef std::chrono::duration<long long, std::nano> duration_t;
+	typedef std::chrono::time_point<std::chrono::steady_clock> timepoint_t;
 	
+	timepoint_t currentTime;
+	timepoint_t lastTime;
+	duration_t frameTime;
+
+	duration_t delta = duration_t(16666667);
+	duration_t accumulator;
+	duration_t runTime;
+
 
 	//-----------------------------
 	// Window Data

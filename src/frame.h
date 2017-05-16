@@ -2,9 +2,9 @@
 
 class CEngine;
 
-class CFrame {
+class IFrame {
 public:
-	virtual void Init() = 0;
+	virtual void Init(CEngine* e) = 0;
 	virtual void Cleanup() = 0;
 
 	virtual void Pause() = 0;
@@ -13,16 +13,8 @@ public:
 	virtual void ProcessInput(bool* keyboard, double mxpos, double mypos) = 0;
 	virtual void Loop() = 0;
 	virtual void Render() = 0;
-
-	void ChangeFrame(CFrame* frame) {
-		engine->ChangeFrame(frame);
-	}
-
-	void SetEngine(CEngine* e) {
-		engine = e;
-	}
 protected:
-	CFrame() = default;
+	IFrame() = default;
 
 	CEngine* engine;
 };
