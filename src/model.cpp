@@ -79,15 +79,13 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	}
 	
 	// Load materials
-	if (mesh->mMaterialIndex > 0) {
-		aiMaterial* mat = scene->mMaterials[mesh->mMaterialIndex];
+	aiMaterial* mat = scene->mMaterials[mesh->mMaterialIndex];
 
-		std::vector<Texture> diffMaps = loadTextures(mat, aiTextureType_DIFFUSE, "diffuse");
-		textures.insert(textures.end(), diffMaps.begin(), diffMaps.end());
+	std::vector<Texture> diffMaps = loadTextures(mat, aiTextureType_DIFFUSE, "diffuse");
+	textures.insert(textures.end(), diffMaps.begin(), diffMaps.end());
 
-		std::vector<Texture> specMaps = loadTextures(mat, aiTextureType_SPECULAR, "specular");
-		textures.insert(textures.end(), specMaps.begin(), specMaps.end());
-	}
+	std::vector<Texture> specMaps = loadTextures(mat, aiTextureType_SPECULAR, "specular");
+	textures.insert(textures.end(), specMaps.begin(), specMaps.end());
 
 	return Mesh(verts, indices, textures);
 }
