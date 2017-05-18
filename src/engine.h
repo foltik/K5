@@ -54,8 +54,8 @@ private:
 	duration_t frameTime;
 
 	duration_t delta = duration_t(16666667);
-	duration_t accumulator;
-	duration_t runTime;
+	duration_t accumulator = duration_t(0);
+	duration_t runTime = duration_t(0);
 
 
 	//-----------------------------
