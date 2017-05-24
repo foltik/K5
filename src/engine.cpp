@@ -7,16 +7,16 @@ double CEngine::mypos;
 
 bool CEngine::keyboard[1024];
 
-CEngine::CEngine(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
-	// Set the required local variables to initialize everything later in Init();
+CEngine::CEngine() {
 	running = true;
+}
+
+void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
 	wndTitle = title;
 	wndW = width;
 	wndH = height;
 	wndFull = fullscreen;
-}
 
-bool CEngine::Init() {
 	// Initialize GLFW and set the target version
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -27,22 +27,19 @@ bool CEngine::Init() {
 
 	// Create and set the context as active
 	wnd = glfwCreateWindow(wndW, wndH, wndTitle, wndFull ? mon : nullptr, nullptr);
-	if (wnd == nullptr) {
-		printf("Error//Lib: GLFW Window Creation Failed\n");
-		return false;
-	}
+	if (wnd == nullptr)
+		throw new std::runtime_error("Error//Lib: GLFW Window Creation Failed");
+
 	glfwMakeContextCurrent(wnd);
 
 	// Initialize GLEW
 	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) {
-		printf("Error//Lib: GLEW Initialization Failed\n");
-		return false;
-	}
+	if (glewInit() != GLEW_OK) 
+		throw new std::runtime_error("Error//Lib: GLEW Initialization Failed\n");
 
 	// Retrieve the window size and create the OpenGL viewport accordingly
-	int width, height;
-	glfwGetFramebufferSize(wnd, &width, &height);
+	int w, h;
+	glfwGetFramebufferSize(wnd, &w, &h);
 	glViewport(0, 0, width, height);
 
 	// Initialize starting time so the first tick doesn't last forever
@@ -53,8 +50,6 @@ bool CEngine::Init() {
 	glfwSetKeyCallback(wnd, key_callback);
 	glfwSetCursorPosCallback(wnd, mouse_callback);
 	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-	return true;
 }
 
 void CEngine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {

@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <stdexcept>
 #include <cstdio>
 #include <stack>
 #include <chrono>
@@ -14,7 +15,12 @@ class IFrame;
 
 class CEngine {
 public:
-	CEngine(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen);
+	static CEngine& Instance() {
+		static CEngine engine;
+		return engine;
+	}
+
+	void CreateWindow(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen);
 
 	bool Init();
 	void Cleanup();
@@ -39,6 +45,14 @@ public:
 	void Quit() { running = false; }
 
 private:
+	CEngine();
+
+	// Prevent copies
+	CEngine(const CEngine&) = delete;
+	CEngine(CEngine&&) = delete;	
+	void operator=(const CEngine&) = delete;
+	void operator=(CEngine&&) = delete;
+
 	bool running;
 
 	std::stack<IFrame*> frames;
