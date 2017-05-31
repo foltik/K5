@@ -14,9 +14,22 @@ struct PointLight {
 	glm::vec3 specular;
 };
 
+class ShaderSource {
+public:
+	ShaderSource(const GLchar* vertexSrc, const GLchar* fragmentSrc) {
+		vertexSource = vertexSrc;
+		fragmentSource = fragmentSrc;
+	}
+
+	const GLchar* vertexSource;
+	const GLchar* fragmentSource;
+};
+
 class Shader {
 public:
-	Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
+	Shader(const char* vertexPath, const char* fragmentPath);
+	Shader(const ShaderSource& s);
+	~Shader() = default;
 
 	void uFloat(const GLchar* name, GLfloat value);
 	void uVector3(const GLchar* name, GLfloat x, GLfloat y, GLfloat z);

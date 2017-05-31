@@ -1,6 +1,6 @@
 #include "shader.h"
 
-Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
+Shader::Shader(const char* vertexPath, const char* fragmentPath)
 {
 	std::string vertexCode;
 	std::string fragmentCode;
@@ -31,6 +31,8 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	catch (const std::ifstream::failure& e)
 	{
 		printf("Error//ShaderLoad: %s\n", e.what());
+		printf("%s\n", vertexPath);
+		printf("%s\n", fragmentPath);
 	}
 
 	// Get C strings from strings
@@ -40,7 +42,6 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	GLuint vertexShader, fragmentShader;
 	GLint success;
 	GLchar infoLog[512];
-
 
 	// Create vertex shader
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -55,7 +56,6 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 		printf("Error//ShaderCompile: %s\n", infoLog);
 	}
 
-
 	// Create fragment shader
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentSource, nullptr);
@@ -68,7 +68,6 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 		glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
 		printf("Error//ShaderCompile: %s\n", infoLog);
 	}
-
 
 	// Create shader program
 	program = glCreateProgram();
@@ -87,7 +86,56 @@ Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath)
 	// Clean up shader objects
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+}
 
+Shader::Shader(const ShaderSource& s) {
+	GLuint vertexShader, fragmentShader;
+	GLint success;
+	GLchar infoLog[512];
+
+	// Create vertex shader
+	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &s.vertexSource, nullptr);
+	glCompileShader(vertexShader);
+
+	// Check for compile errors
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
+		printf("Error//ShaderCompile: %s\n", infoLog);
+	}
+
+	// Create fragment shader
+	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &s.fragmentSource, nullptr);
+	glCompileShader(fragmentShader);
+
+	// Check for compile errors
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
+		printf("Error//ShaderCompile: %s\n", infoLog);
+	}
+
+	// Create shader program
+	program = glCreateProgram();
+	glAttachShader(program, vertexShader);
+	glAttachShader(program, fragmentShader);
+	glLinkProgram(program);
+
+	// Check for linker errors
+	glGetProgramiv(program, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(program, 512, nullptr, infoLog);
+		printf("Error//ShaderLink: %s\n", infoLog);
+	}
+
+	// Clean up shader objects
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
 }
 
 void Shader::uFloat(const GLchar* name, GLfloat value) {

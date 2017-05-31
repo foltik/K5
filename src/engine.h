@@ -2,6 +2,8 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 #include <stdexcept>
 #include <cstdio>
@@ -40,6 +42,8 @@ public:
 
 	GLFWmonitor* mon;
 	GLFWwindow* wnd;
+	static GLuint wndW;
+	static GLuint wndH;
 
 	bool Running() { return running; }
 	void Quit() { running = false; }
@@ -71,12 +75,6 @@ private:
 	duration_t accumulator = duration_t(0);
 	duration_t runTime = duration_t(0);
 
-
-	//-----------------------------
-	// Window Data
-	//-----------------------------
 	const GLchar* wndTitle;
-	GLuint wndW;
-	GLuint wndH;
 	GLboolean wndFull;
 };

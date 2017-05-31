@@ -3,6 +3,8 @@
 #include "engine.h"
 #include "frame.h"
 
+#include "textrenderer.h"
+
 #include "shader.h"
 #include "texture.h"
 

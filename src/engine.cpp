@@ -2,6 +2,9 @@
 
 #include "frame.h"
 
+GLuint CEngine::wndH;
+GLuint CEngine::wndW;
+
 double CEngine::mxpos;
 double CEngine::mypos;
 
