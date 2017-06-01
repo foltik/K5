@@ -31,8 +31,6 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	catch (const std::ifstream::failure& e)
 	{
 		printf("Error//ShaderLoad: %s\n", e.what());
-		printf("%s\n", vertexPath);
-		printf("%s\n", fragmentPath);
 	}
 
 	// Get C strings from strings
@@ -89,6 +87,8 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 }
 
 Shader::Shader(const ShaderSource& s) {
+	printf("%s\n%s\n", s.vertexSource, s.fragmentSource);
+
 	GLuint vertexShader, fragmentShader;
 	GLint success;
 	GLchar infoLog[512];

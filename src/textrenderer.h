@@ -12,7 +12,7 @@ struct Glyph {
 	GLuint texture;
 	glm::vec2 size;
 	glm::vec2 bearing;
-	GLfloat offset;
+	long offset;
 };
 
 using Charset = std::map<char, Glyph>;
