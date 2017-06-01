@@ -48,15 +48,14 @@ public:
 	bool Running() { return running; }
 	void Quit() { running = false; }
 
-private:
-	CEngine();
-
-	// Prevent copies
+protected:
+	CEngine() { running = true; }
 	CEngine(const CEngine&) = delete;
-	CEngine(CEngine&&) = delete;	
+	CEngine(CEngine&&) = delete;
 	void operator=(const CEngine&) = delete;
 	void operator=(CEngine&&) = delete;
 
+private:
 	bool running;
 
 	std::stack<IFrame*> frames;

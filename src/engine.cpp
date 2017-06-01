@@ -10,10 +10,6 @@ double CEngine::mypos;
 
 bool CEngine::keyboard[1024];
 
-CEngine::CEngine() {
-	running = true;
-}
-
 void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
 	wndTitle = title;
 	wndW = width;
@@ -37,7 +33,7 @@ void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLb
 
 	// Initialize GLEW
 	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) 
+	if (glewInit() != GLEW_OK)
 		throw new std::runtime_error("Error//Lib: GLEW Initialization Failed\n");
 
 	// Retrieve the window size and create the OpenGL viewport accordingly
