@@ -48,7 +48,7 @@ void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLb
 	// Key Callbacks
 	glfwSetKeyCallback(wnd, key_callback);
 	glfwSetCursorPosCallback(wnd, mouse_callback);
-	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
 void CEngine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {

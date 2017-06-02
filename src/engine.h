@@ -24,7 +24,6 @@ public:
 
 	void CreateWindow(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen);
 
-	bool Init();
 	void Cleanup();
 
 	void ChangeFrame(IFrame* frame);
