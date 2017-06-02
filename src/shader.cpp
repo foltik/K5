@@ -87,8 +87,6 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 }
 
 Shader::Shader(const ShaderSource& s) {
-	printf("%s\n%s\n", s.vertexSource, s.fragmentSource);
-
 	GLuint vertexShader, fragmentShader;
 	GLint success;
 	GLchar infoLog[512];
