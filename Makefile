@@ -2,8 +2,8 @@ CC = clang++
 AR = ar
 
 LIBFLAGS = -lGl
-FLAGS = -Wall -std=c++11
-DBGFLAGS = -Wall -ggdb3 -std=c++11
+FLAGS = -Wall -std=c++11 -I/usr/include/freetype2
+DBGFLAGS = -Wall -ggdb3 -std=c++11 -I/usr/include/freetype2
 
 BUILDDIR = build
 
