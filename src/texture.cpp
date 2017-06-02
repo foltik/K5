@@ -22,7 +22,6 @@ void Texture::genTexture(const char* path)
 	glBindTexture(GL_TEXTURE_2D, this->texture);
 
 	// Load the texture
-	printf("Loading %s...\n", path);
 	unsigned char* data = SOIL_load_image(path, &width, &height, nullptr, SOIL_LOAD_RGB);
 	if (data == nullptr) {
 		printf("Error//TextureLoad: Texture %s failed to load\n", path);
