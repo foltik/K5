@@ -6,6 +6,7 @@
 
 class Texture {
 public:
+	Texture() = default;
 	Texture(const char* path);
 	Texture(const char* path, const char* dir);
 
