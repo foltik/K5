@@ -138,6 +138,10 @@ Shader::Shader(const ShaderSource& s) {
 	glDeleteShader(fragmentShader);
 }
 
+void Shader::uInt(const GLchar * name, GLint value) {
+	glUniform1i(glGetUniformLocation(program, name), value);
+}
+
 void Shader::uFloat(const GLchar* name, GLfloat value) {
 	glUniform1f(glGetUniformLocation(program, name), value);
 }

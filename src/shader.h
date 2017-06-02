@@ -31,6 +31,7 @@ public:
 	Shader(const ShaderSource& s);
 	~Shader() = default;
 
+	void uInt(const GLchar* name, GLint value);
 	void uFloat(const GLchar* name, GLfloat value);
 	void uVector3(const GLchar* name, GLfloat x, GLfloat y, GLfloat z);
 	void uVector3(const GLchar* name, const glm::vec3& value);
