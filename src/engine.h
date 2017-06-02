@@ -38,6 +38,7 @@ public:
 
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+	static void mousebutton_callback(GLFWwindow* window, int button, int action, int mods);
 
 	GLFWmonitor* mon;
 	GLFWwindow* wnd;
@@ -61,6 +62,7 @@ private:
 
 	static double mxpos, mypos;
 	static bool keyboard[1024];
+	static bool mouse[16];
 
 	typedef std::chrono::duration<long long, std::nano> duration_t;
 	typedef std::chrono::time_point<std::chrono::steady_clock> timepoint_t;

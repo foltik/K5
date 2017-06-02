@@ -9,6 +9,7 @@ double CEngine::mxpos;
 double CEngine::mypos;
 
 bool CEngine::keyboard[1024];
+bool CEngine::mouse[16];
 
 void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
 	wndTitle = title;
@@ -48,6 +49,7 @@ void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLb
 	// Key Callbacks
 	glfwSetKeyCallback(wnd, key_callback);
 	glfwSetCursorPosCallback(wnd, mouse_callback);
+	glfwSetMouseButtonCallback(wnd, mousebutton_callback);
 	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
@@ -61,6 +63,13 @@ void CEngine::key_callback(GLFWwindow* window, int key, int scancode, int action
 void CEngine::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	mxpos = xpos;
 	mypos = ypos;
+}
+
+void CEngine::mousebutton_callback(GLFWwindow* window, int button, int action, int mods) {
+	if (action == GLFW_PRESS)
+		mouse[button] = true;
+	else if (action == GLFW_RELEASE)
+		mouse[button] = false;
 }
 
 void CEngine::Tick() {
@@ -83,7 +92,7 @@ void CEngine::Tick() {
 }
 
 void CEngine::ProcessInput() {
-	frames.top()->ProcessInput(keyboard, mxpos, mypos);
+	frames.top()->ProcessInput(keyboard, mouse, mxpos, mypos);
 }
 
 void CEngine::Loop() {
