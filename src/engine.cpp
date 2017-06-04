@@ -18,7 +18,9 @@ void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLb
 	wndFull = fullscreen;
 
 	// Initialize GLFW and set the target version
-	glfwInit();
+	if (glfwInit() != GLFW_TRUE)
+		throw new std::runtime_error("Error//Lib: GLFW Initialization Failed");
+
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);

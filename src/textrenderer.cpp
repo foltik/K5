@@ -67,7 +67,8 @@ void TextRenderer::LoadFont(const char* path, FT_UInt height) {
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	for (GLubyte i = 0; i < 128; i++) {
+	// Load first 255 ascii characters
+	for (GLubyte i = 0; i < 255; i++) {
 		if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
 			printf("Error//GlyphLoad: Failed to load glyph %d\n", i);
 			continue;

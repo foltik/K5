@@ -44,6 +44,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -78,7 +79,7 @@
     <TargetName>k5</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\usr\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\usr\include\freetype2;D:\usr\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\usr\lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)build\windows\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\windows\$(Configuration)\obj\</IntDir>
@@ -120,7 +121,7 @@
       </EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)build\windows\Debug\k5.lib" "D:\usr\lib\x64\"
+      <Command>copy "$(SolutionDir)build\windows\$(Configuration)\k5.lib" "D:\usr\lib\x64\"
 copy "$(SolutionDir)src\*.h" "D:\usr\include\k5"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
@@ -129,11 +130,11 @@ copy "$(SolutionDir)src\*.h" "D:\usr\include\k5"</Command>
     </PostBuildEvent>
     <ClCompile>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <MinimalRebuild>false</MinimalRebuild>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -144,8 +145,8 @@ copy "$(SolutionDir)src\*.h" "D:\usr\include\k5"</Command>
       </EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "$(SolutionDir)build\windows\$(Configuration)\k5.lib" "D:\usr\lib\x64\"
+copy "$(SolutionDir)src\*.h" "D:\usr\include\k5"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>
@@ -154,6 +155,7 @@ copy "$(SolutionDir)src\*.h" "D:\usr\include\k5"</Command>
     <ClCompile>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
