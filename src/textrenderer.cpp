@@ -1,141 +1,54 @@
 #include "textrenderer.h"
 
 TextRenderer::TextRenderer() {
-	if (FT_Init_FreeType(&ftlib))
-		throw new std::runtime_error("Error//Lib: FreeType Initialization Failed\n");
-
-	shader = new Shader(ShaderSource(
-		R"(
-			#version 330 core
-			layout (location = 0) in vec4 vertex;
-			out vec2 TexCoord;
-
-			uniform mat4 proj;
-
-			void main() {
-				gl_Position = proj * vec4(vertex.xy, 0.0, 1.0);
-				TexCoord = vertex.zw;
-			}
-		)",
-
-		R"(
-			#version 330 core
-			in vec2 TexCoord;
-			out vec4 color;
-
-			uniform sampler2D text;
-			uniform vec3 textColor;
-
-			void main() {
-				vec4 sample = vec4(1.0, 1.0, 1.0, texture(text, TexCoord).r);
-				color = vec4(textColor, 1.0) * sample;
-			}
-		)"
-	));
-
 	proj = glm::ortho(0.0f, (GLfloat)CEngine::wndW, 0.0f, (GLfloat)CEngine::wndH);
+}
+
+void TextRenderer::LoadFont(std::string font, FT_UInt height) {
+	loadedFonts.insert(std::make_pair(font, Atlas(font, height)));
+}
+
+void TextRenderer::DrawText(std::string text, GLfloat x, GLfloat y) {
+	GLuint vao;
+	GLuint vbo;
 
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
 
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-}
 
-TextRenderer::~TextRenderer() {
-	FT_Done_FreeType(ftlib);
+	shader.Use();
 
-	delete shader;
-}
+	shader.uVector3("textColor", currentColor);
+	shader.uMatrix4("proj", proj);
 
-void TextRenderer::LoadFont(const char* path, FT_UInt height) {
-	FT_Face face;
-	
-	if (FT_New_Face(ftlib, path, 0, &face))
-		throw new std::runtime_error("Error//FontLoad: Failed to load font " + std::string(path) + "\n");
+	for (char c : text) {
+		Glyph g = loadedFonts[currentFont].getGlyph(c);
 
-	FT_Set_Pixel_Sizes(face, 0, height);
-
-	Charset c;
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	// Load first 255 ascii characters
-	for (GLubyte i = 0; i < 255; i++) {
-		if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
-			printf("Error//GlyphLoad: Failed to load glyph %d\n", i);
-			continue;
-		}
-
-		GLuint texture;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glTexImage2D(
-			GL_TEXTURE_2D,
-			0,
-			GL_RED,
-			face->glyph->bitmap.width,
-			face->glyph->bitmap.rows,
-			0,
-			GL_RED,
-			GL_UNSIGNED_BYTE,
-			face->glyph->bitmap.buffer
-		);		
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		c.insert(std::pair<char, Glyph>((char)i, {
-			texture,
-			glm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-			glm::vec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-			face->glyph->advance.x
-		}));
-	}
-
-	loadedFonts.insert(std::pair<const char*, Charset>(path, c));
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	FT_Done_Face(face);
-}
-
-void TextRenderer::DrawText(std::string text, GLfloat x, GLfloat y, GLfloat scl, glm::vec3 color, const char* font) {
-	shader->Use();
-
-	shader->uVector3("textColor", color);
-	shader->uMatrix4("proj", proj);
-	glActiveTexture(GL_TEXTURE0);
-	glBindVertexArray(vao);
-
-	for (auto c : text) {
-		//printf("Printing %c\n", c);
-		Glyph g = loadedFonts[font][c];
-
-		GLfloat px = x + g.bearing.x * scl;
-		GLfloat py = y - (g.size.y - g.bearing.y) * scl;
-		GLfloat w = g.size.x * scl;
-		GLfloat h = g.size.y * scl;
+		GLfloat px = x + g.bearing.x * currentScale;
+		GLfloat py = y - (g.size.y - g.bearing.y) * currentScale;
+		GLfloat w = g.size.x * currentScale;
+		GLfloat h = g.size.y * currentScale;
 
 		GLfloat verts[6][4] = {
-			{ px, py + h,     0.0, 0.0 },
-			{ px, py,         0.0, 1.0 },
-			{ px + w, py,     1.0, 1.0 },
-			{ px, py + h,     0.0, 0.0 },
-			{ px + w, py,     1.0, 1.0 },
-			{ px + w, py + h, 1.0, 0.0 }
+			{ px, py, g.bl.x, g.bl.y },
+			{ px, py + h, g.tl.x, g.tl.y },
+			{ px + w, py + h, g.tr.x, g.tr.y },
+			{ px, py, g.bl.x, g.bl.y },
+			{ px + w, py + h, g.tr.x, g.tr.y },
+			{ px + w, py, g.br.x, g.br.y }
 		};
 
-		glBindTexture(GL_TEXTURE_2D, g.texture);
+		glActiveTexture(GL_TEXTURE0);
+
+		glBindVertexArray(vao);
+		
+		glBindTexture(GL_TEXTURE_2D, loadedFonts[currentFont].Texture());
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(verts), verts);
@@ -143,9 +56,6 @@ void TextRenderer::DrawText(std::string text, GLfloat x, GLfloat y, GLfloat scl,
 
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
-		x += (g.offset / 64) * scl;
+		x += (g.advance.x / 64) * currentScale;
 	}
-
-	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
