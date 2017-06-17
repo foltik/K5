@@ -1,47 +1,45 @@
 #include "camera.h"
 
-Camera::Camera(glm::vec3 position, glm::vec2 angle) {
+Camera::Camera(glm::vec3 position, glm::vec2 _angle) {
 	pos = position;
-	pitch = angle.x;
-	yaw = angle.y;
+	angle = _angle;
 }
 
-Camera::Camera(glm::vec3 position, glm::vec2 angle, float moveSpeed, float sensitivity) {
+Camera::Camera(glm::vec3 position, glm::vec2 _angle, float moveSpeed, float sensitivity) {
 	pos = position;
-	pitch = angle.x;
-	yaw = angle.y;
+	angle = _angle;
 	speed = moveSpeed;
 	sens = sensitivity;
 }
 
 void Camera::Update() {
-	front.x = glm::cos(glm::radians(pitch)) * glm::cos(glm::radians(yaw));
-	front.y = glm::sin(glm::radians(pitch));
-	front.z = glm::cos(glm::radians(pitch)) * glm::sin(glm::radians(yaw));
+	front.x = glm::cos(glm::radians(angle.y)) * glm::cos(glm::radians(angle.x));
+	front.y = glm::sin(glm::radians(angle.y));
+	front.z = glm::cos(glm::radians(angle.y)) * glm::sin(glm::radians(angle.x));
 
 	view = glm::lookAt(pos, pos + front, up);
 }
 
 void Camera::Update(float mouseX, float mouseY) {
-	yaw += (mouseX - lastX) * sens;
-	pitch += (lastY - mouseY) * sens;
+	angle.x += (mouseX - lastX) * sens;
+	angle.y += (lastY - mouseY) * sens;
 
 	lastX = mouseX;
 	lastY = mouseY;
 
-	if (yaw > 360.0f)
-		yaw -= 360.0f;
-	if (yaw < -360.0f)
-		yaw += 360.0f;
+	if (angle.x > 360.0f)
+		angle.x -= 360.0f;
+	if (angle.x < -360.0f)
+		angle.x += 360.0f;
 
-	if (pitch < -89.0f)
-		pitch = -89.0f;
-	if (pitch > 89.0f)
-		pitch = 89.0f;
+	if (angle.y < -89.0f)
+		angle.y = -89.0f;
+	if (angle.y > 89.0f)
+		angle.y = 89.0f;
 
-	front.x = glm::cos(glm::radians(pitch)) * glm::cos(glm::radians(yaw));
-	front.y = glm::sin(glm::radians(pitch));
-	front.z = glm::cos(glm::radians(pitch)) * glm::sin(glm::radians(yaw));
+	front.x = glm::cos(glm::radians(angle.y)) * glm::cos(glm::radians(angle.x));
+	front.y = glm::sin(glm::radians(angle.y));
+	front.z = glm::cos(glm::radians(angle.y)) * glm::sin(glm::radians(angle.x));
 
 	view = glm::lookAt(pos, pos + front, up);
 }
@@ -61,36 +59,27 @@ void Camera::StrafeLeft() {
 }
 
 void Camera::SetAngle(glm::vec2 angle) {
-	pitch = angle.x;
-	yaw = angle.y;
+	angle.y = angle.x;
+	angle.x = angle.y;
 
-	if (yaw > 360.0f)
-		while (yaw > 360.0f)
-			yaw -= 360.0f;
+	if (angle.x > 360.0f)
+		while (angle.x > 360.0f)
+			angle.x -= 360.0f;
 
-	if (yaw < -360.0f)
-		while (yaw < -360.0f)
-				yaw += 360.0f;
+	if (angle.x < -360.0f)
+		while (angle.x < -360.0f)
+				angle.x += 360.0f;
 
-	if (pitch < -89.0f)
-		pitch = -89.0f;
+	if (angle.y < -89.0f)
+		angle.y = -89.0f;
 
-	if (pitch > 89.0f)
-		pitch = 89.0f;
+	if (angle.y > 89.0f)
+		angle.y = 89.0f;
 }
 
 void Camera::SetSpeed(float moveSpeed) { speed = moveSpeed; }
-
 void Camera::SetSens(float sensitivity) { sens = sensitivity; }
 
-glm::mat4 Camera::GetView() {
-	return view;
-}
-
-glm::vec3 Camera::GetPos() {
-	return pos;
-}
-
-glm::vec2 Camera::GetAngle() {
-	return glm::vec2(pitch, yaw);
-}
+glm::mat4 Camera::GetView() { return view; }
+glm::vec3 Camera::GetPos() { return pos; }
+glm::vec2 Camera::GetAngle() { return angle; }
