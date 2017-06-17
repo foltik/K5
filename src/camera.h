@@ -22,6 +22,8 @@ public:
 	void SetSens(float sensitivity);
 
 	glm::mat4 GetView();
+	glm::vec3 GetPos();
+	glm::vec2 GetAngle();
 
 private:
 	glm::vec3 pos;

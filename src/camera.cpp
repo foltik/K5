@@ -86,3 +86,11 @@ void Camera::SetSens(float sensitivity) { sens = sensitivity; }
 glm::mat4 Camera::GetView() {
 	return view;
 }
+
+glm::vec3 Camera::GetPos() {
+	return pos;
+}
+
+glm::vec2 Camera::GetAngle() {
+	return glm::vec2(pitch, yaw);
+}
