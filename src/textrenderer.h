@@ -24,7 +24,7 @@ public:
 
 	void LoadFont(const char* font, FT_UInt height);
 
-	void DrawText(std::string text, GLfloat x, GLfloat y, GLfloat scl, glm::vec3 color, const char* font);
+	void DrawText(std::string text, GLfloat x, GLfloat y, GLfloat scl, glm::vec3 color, std::string font);
 
 private:
 	FT_Library ftlib;
@@ -35,5 +35,5 @@ private:
 	GLuint vao;
 	GLuint vbo;
 
-	std::map<const char*, Charset> loadedFonts;
+	std::map<std::string, Charset> loadedFonts;
  };

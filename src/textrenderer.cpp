@@ -56,6 +56,11 @@ TextRenderer::~TextRenderer() {
 }
 
 void TextRenderer::LoadFont(const char* path, FT_UInt height) {
+	std::string p = CEngine::Instance().path + std::string(path);
+    std::string name = p.substr(p.find_last_of("/") + 1);
+
+	path = p.c_str();
+
 	FT_Face face;
 	
 	if (FT_New_Face(ftlib, path, 0, &face))
@@ -102,14 +107,14 @@ void TextRenderer::LoadFont(const char* path, FT_UInt height) {
 		}));
 	}
 
-	loadedFonts.insert(std::pair<const char*, Charset>(path, c));
+	loadedFonts.insert(std::make_pair(name, c));
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	FT_Done_Face(face);
 }
 
-void TextRenderer::DrawText(std::string text, GLfloat x, GLfloat y, GLfloat scl, glm::vec3 color, const char* font) {
+void TextRenderer::DrawText(std::string text, GLfloat x, GLfloat y, GLfloat scl, glm::vec3 color, std::string font) {
 	shader->Use();
 
 	shader->uVector3("textColor", color);
@@ -118,7 +123,11 @@ void TextRenderer::DrawText(std::string text, GLfloat x, GLfloat y, GLfloat scl,
 	glBindVertexArray(vao);
 
 	for (auto c : text) {
-		//printf("Printing %c\n", c);
+        if (!loadedFonts.count(font)) {
+            printf("Error//TextDraw: Font %s not found\n", font);
+            return;
+        }
+
 		Glyph g = loadedFonts[font][c];
 
 		GLfloat px = x + g.bearing.x * scl;

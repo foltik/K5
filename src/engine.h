@@ -1,5 +1,4 @@
 #pragma once
-#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <ft2build.h>
@@ -9,9 +8,6 @@
 #include <cstdio>
 #include <stack>
 #include <chrono>
-
-#define K5_EXIT_SUCCESS 0
-#define K5_EXIT_FAILURE 1
 
 class IFrame;
 
@@ -36,6 +32,8 @@ public:
 	void Loop();
 	void Render();
 
+    void SetCwd(char* argv);
+
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 	static void mousebutton_callback(GLFWwindow* window, int button, int action, int mods);
@@ -44,6 +42,8 @@ public:
 	GLFWwindow* wnd;
 	static GLuint wndW;
 	static GLuint wndH;
+
+    std::string path;
 
 	bool Running() { return running; }
 	void Quit() { running = false; }

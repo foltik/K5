@@ -10,6 +10,9 @@ void Model::Draw(Shader* shader) {
 }
 
 void Model::genModel(const char* path) {
+	std::string p = CEngine::Instance().path + std::string(path);
+    path = p.c_str();
+
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_OptimizeMeshes | aiProcess_JoinIdenticalVertices);
 

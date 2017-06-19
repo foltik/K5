@@ -55,6 +55,12 @@ void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLb
 	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
+void CEngine::SetCwd(char *argv) {
+    std::string s(argv);
+    s = s.substr(0, s.find_last_of("/") + 1);
+    path = s;
+}
+
 void CEngine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (action == GLFW_PRESS)
 		keyboard[key] = true;

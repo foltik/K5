@@ -1,4 +1,6 @@
 #pragma once
+#include "engine.h"
+
 #include <iostream>
 
 #include <GL/glew.h>

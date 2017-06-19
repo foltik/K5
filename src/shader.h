@@ -1,4 +1,6 @@
 #pragma once
+#include "engine.h"
+
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -27,7 +29,7 @@ public:
 
 class Shader {
 public:
-	Shader(const char* vertexPath, const char* fragmentPath);
+	Shader(std::string vertexPath, std::string fragmentPath);
 	Shader(const ShaderSource& s);
 	~Shader() = default;
 
@@ -43,5 +45,8 @@ public:
 
 	void Use() { glUseProgram(program); }
 
+private:
 	GLuint program;
+
+    void compileShader(const GLchar* vertexSource, const GLchar* fragmentSource);
 };

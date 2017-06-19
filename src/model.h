@@ -1,13 +1,14 @@
 #pragma once
+#include "mesh.h"
+#include "shader.h"
+#include "engine.h"
+
 #include <vector>
 
 #include <GL/glew.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-
-#include "mesh.h"
-#include "shader.h"
 
 class Model {
 public:

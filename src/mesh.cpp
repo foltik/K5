@@ -18,8 +18,7 @@ void Mesh::Draw(Shader* shader) {
 		std::string number = std::to_string(name == "diffuse" ? diffuse++ : specular++);
 		std::string var = "texture_" + name + number;
 
-		//shader->uFloat(var.c_str(), (GLfloat)i);
-		glUniform1i(glGetUniformLocation(shader->program, var.c_str()), i);
+		shader->uInt(var.c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].texture);
 	}
 	glActiveTexture(GL_TEXTURE0);
