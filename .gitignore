@@ -5,6 +5,11 @@
 *.opendb
 *.suo
 
+# CLion
+.idea/
+cmake-build-release/
+cmake-build-debug/
+
 # Vim
 *.swp
 
