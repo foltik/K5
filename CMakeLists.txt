@@ -21,12 +21,12 @@ set(SOURCE_FILES
         src/textrenderer.cpp
         src/textrenderer.h
         src/texture.cpp
-        src/texture.h)
+        src/texture.h src/cubemap.cpp src/cubemap.h)
 
 add_library(k5 STATIC ${SOURCE_FILES})
 
 set_target_properties(k5 PROPERTIES
-                      PUBLIC_HEADER "src/camera.h;src/engine.h;src/frame.h;src/k5.h;src/mesh.h;src/model.h;src/shader.h;src/textrenderer.h;src/texture.h")
+                      PUBLIC_HEADER "src/camera.h;src/engine.h;src/frame.h;src/k5.h;src/mesh.h;src/model.h;src/shader.h;src/textrenderer.h;src/texture.h;src/cubemap.h")
 
 install(TARGETS k5
         ARCHIVE DESTINATION lib
