@@ -4,6 +4,7 @@
 #include "frame.h"
 
 #include "textrenderer.h"
+#include "spriterenderer.h"
 
 #include "camera.h"
 
