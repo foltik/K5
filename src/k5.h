@@ -10,6 +10,7 @@
 
 #include "shader.h"
 #include "texture.h"
+#include "cubemap.h"
 
 #include "mesh.h"
 #include "model.h"
