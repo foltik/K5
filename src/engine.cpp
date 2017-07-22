@@ -2,8 +2,8 @@
 
 #include "frame.h"
 
-GLuint CEngine::wndH;
-GLuint CEngine::wndW;
+int CEngine::wndH;
+int CEngine::wndW;
 
 double CEngine::mxpos;
 double CEngine::mypos;
@@ -11,7 +11,7 @@ double CEngine::mypos;
 bool CEngine::keyboard[1024];
 bool CEngine::mouse[16];
 
-void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen) {
+void CEngine::CreateWindow(const char* title, int width, int height, bool fullscreen) {
 	wndTitle = title;
 	wndW = width;
 	wndH = height;
@@ -53,6 +53,11 @@ void CEngine::CreateWindow(const GLchar* title, GLuint width, GLuint height, GLb
 	glfwSetCursorPosCallback(wnd, mouse_callback);
 	glfwSetMouseButtonCallback(wnd, mousebutton_callback);
 	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void CEngine::SetCwd(char *argv) {

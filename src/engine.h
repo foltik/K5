@@ -18,7 +18,7 @@ public:
 		return engine;
 	}
 
-	void CreateWindow(const GLchar* title, GLuint width, GLuint height, GLboolean fullscreen);
+	void CreateWindow(const char* title, int width, int height, bool fullscreen);
 
 	void Cleanup();
 
@@ -40,8 +40,8 @@ public:
 
 	GLFWmonitor* mon;
 	GLFWwindow* wnd;
-	static GLuint wndW;
-	static GLuint wndH;
+	static int wndW;
+	static int wndH;
 
     std::string path;
 
@@ -75,6 +75,6 @@ private:
 	duration_t accumulator = duration_t(0);
 	duration_t runTime = duration_t(0);
 
-	const GLchar* wndTitle;
-	GLboolean wndFull;
+	const char* wndTitle;
+	bool wndFull;
 };
