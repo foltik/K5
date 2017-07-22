@@ -22,14 +22,14 @@ void Texture::genTexture(const char* path)
 	glBindTexture(GL_TEXTURE_2D, this->texture);
 
 	// Load the texture
-	unsigned char* data = SOIL_load_image(path, &width, &height, nullptr, SOIL_LOAD_RGB);
+	unsigned char* data = SOIL_load_image(path, &width, &height, nullptr, SOIL_LOAD_RGBA);
 	if (data == nullptr) {
 		printf("Error//TextureLoad: Texture %s failed to load\n", path);
 		return;
 	}
 
 	// Load the texture data into the texture object and generate mipmaps	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	// Set texture parameters
