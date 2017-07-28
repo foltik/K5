@@ -99,12 +99,12 @@ void TextRenderer::LoadFont(const char* path, FT_UInt height) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		c.insert(std::pair<char, Glyph>((char)i, {
-			texture,
-			glm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-			glm::vec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-			face->glyph->advance.x
-		}));
+		c.insert({(char)i, {
+            texture,
+            glm::vec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+            glm::vec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+            face->glyph->advance.x
+        }});
 	}
 
 	loadedFonts.insert(std::make_pair(name, c));
