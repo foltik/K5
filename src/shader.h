@@ -35,6 +35,8 @@ public:
 
 	void uInt(const GLchar* name, GLint value);
 	void uFloat(const GLchar* name, GLfloat value);
+	void uVector2(const GLchar* name, GLfloat x, GLfloat y);
+    void uVector2(const GLchar* name, const glm::vec2& value);
 	void uVector3(const GLchar* name, GLfloat x, GLfloat y, GLfloat z);
 	void uVector3(const GLchar* name, const glm::vec3& value);
 	void uVector4(const GLchar* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w);

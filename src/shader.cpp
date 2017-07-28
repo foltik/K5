@@ -94,6 +94,14 @@ void Shader::uFloat(const GLchar* name, GLfloat value) {
 	glUniform1f(glGetUniformLocation(program, name), value);
 }
 
+void Shader::uVector2(const GLchar *name, GLfloat x, GLfloat y) {
+    glUniform2f(glGetUniformLocation(program, name), x, y);
+}
+
+void Shader::uVector2(const GLchar *name, const glm::vec2 &value) {
+    glUniform2f(glGetUniformLocation(program, name), value.x, value.y);
+}
+
 void Shader::uVector3(const GLchar* name, GLfloat x, GLfloat y, GLfloat z) {
 	glUniform3f(glGetUniformLocation(program, name), x, y, z);
 }
