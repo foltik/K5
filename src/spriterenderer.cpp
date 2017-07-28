@@ -67,7 +67,10 @@ void SpriteRenderer::DrawSprite(Texture& tex, glm::vec2 pos, glm::vec2 size, flo
     model = glm::translate(model, glm::vec3(pos, 0.0f));
     model = glm::translate(model, glm::vec3(0.5f * size, 0.0f));
     model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, glm::vec3(-0.5f * size, 0.0f));
+    model = gltill fun to write a program that can resoundingly beat you
+again and again.
+To  begin  a  game,  you  shake  up  the  letter  cubes  and  lay  them  out  on  the  board. The  human  player
+plays first, entering words one by one. Your codem::translate(model, glm::vec3(-0.5f * size, 0.0f));
     model = glm::scale(model, glm::vec3(size, 1.0f));
 
     shader->uMatrix4("model", model);
