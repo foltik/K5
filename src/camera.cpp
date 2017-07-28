@@ -1,5 +1,7 @@
 #include "camera.h"
 
+Camera::Camera() : pos(0.0f), angle(0.0f) {}
+
 Camera::Camera(glm::vec3 position, glm::vec2 _angle) {
 	pos = position;
 	angle = _angle;
