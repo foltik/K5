@@ -58,11 +58,11 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		vertex.norm = vec;
 
 		if (mesh->HasTextureCoords(0)) {
-			glm::vec2 vec;
+			glm::vec2 tex;
 			
-			vec.x = mesh->mTextureCoords[0][i].x;
-			vec.y = mesh->mTextureCoords[0][i].y;
-			vertex.tex = vec;
+			tex.x = mesh->mTextureCoords[0][i].x;
+			tex.y = mesh->mTextureCoords[0][i].y;
+			vertex.tex = tex;
 		}
 		else {
 			vertex.tex = glm::vec2(0.0f, 0.0f);
