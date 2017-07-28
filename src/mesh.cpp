@@ -13,7 +13,7 @@ void Mesh::Draw(Shader* shader) {
 	int specular = 1;
 
 	for (int i = 0; i < textures.size(); i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
+		glActiveTexture(GL_TEXTURE0 + (GLenum)i);
 		std::string name = textures[i].type;
 		std::string number = std::to_string(name == "diffuse" ? diffuse++ : specular++);
 		std::string var = "texture_" + name + number;
@@ -30,7 +30,7 @@ void Mesh::Draw(Shader* shader) {
 	glBindVertexArray(0);
 
 	for (int i = 0; i < textures.size(); i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
+		glActiveTexture(GL_TEXTURE0 + (GLenum)i);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
