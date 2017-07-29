@@ -5,6 +5,7 @@
 
 #include "textrenderer.h"
 #include "spriterenderer.h"
+#include "particlegenerator.h"
 
 #include "camera.h"
 
