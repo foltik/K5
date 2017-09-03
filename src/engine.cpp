@@ -1,19 +1,41 @@
 #include "engine.h"
+
+#include <utility>
 #include "frame.h"
 
 double CEngine::mxpos, CEngine::mypos;
-bool CEngine::keyboard[256];
+bool CEngine::keyboard[512];
 bool CEngine::mouse[16];
 
 void CEngine::Init(std::string title, int width, int height, char* argv) {
     SetCwd(argv);
+
     CreateWindow(title, width, height);
 }
 
+void CEngine::Launch() {
+    running = true;
+
+    while (running) {
+        Tick();
+    }
+
+    Cleanup();
+}
+
+void CEngine::Cleanup() {
+    while (!frames.empty()) {
+		frames.top()->Cleanup();
+		frames.pop();
+	}
+
+	glfwTerminate();
+}
+
 void CEngine::CreateWindow(std::string title, int width, int height) {
-	wndTitle = title;
-	wndW = width;
-	wndH = height;
+    wndTitle = title;
+    wndW = width;
+    wndH = height;
 
 	// Initialize GLFW and set the target version
 	if (glfwInit() != GLFW_TRUE)
@@ -87,10 +109,17 @@ void CEngine::mousebutton_callback(GLFWwindow* window, int button, int action, i
 void CEngine::Tick() {
 	// Get frame time
 	currentTime = std::chrono::steady_clock::now();
-	frameTime = currentTime - lastTime; 
+
+    if (firstTick) {
+        frameTime = duration_t(0);
+        firstTick = false;
+    } else {
+        frameTime = currentTime - lastTime;
+    }
+	frameTime = currentTime - lastTime;
 	lastTime = std::chrono::steady_clock::now();
 
-	accumulator += frameTime;
+    accumulator += frameTime;
 
 	while (accumulator > delta) {
 		ProcessInput();
@@ -113,15 +142,6 @@ void CEngine::Loop() {
 
 void CEngine::Render() {
 	frames.top()->Render();
-}
-
-void CEngine::Cleanup() {
-	while (!frames.empty()) {
-		frames.top()->Cleanup();
-		frames.pop();
-	}
-
-	glfwTerminate();
 }
 
 void CEngine::ChangeFrame(IFrame* frame) {

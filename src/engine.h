@@ -20,6 +20,9 @@ public:
 
     void Init(std::string title, int width, int height, char* cwd);
 
+    void Launch();
+    void Cleanup();
+    void Quit() { running = false; }
 
     std::string getCwd() const { return cwd; }
 
@@ -27,8 +30,6 @@ public:
     int getWindowHeight() const { return wndH; }
 
     void CreateWindow(std::string title, int width, int height);
-
-	void Cleanup();
 
 	void ChangeFrame(IFrame* frame);
 	void PushFrame(IFrame* frame);
@@ -52,23 +53,22 @@ public:
     std::string wndTitle = "";
     std::string cwd = "";
 
-	bool Running() { return running; }
-	void Quit() { running = false; }
-
 protected:
-	CEngine() { running = true; }
-	CEngine(const CEngine&) = delete;
+	CEngine() = default;
+public:
+    CEngine(const CEngine&) = delete;
 	CEngine(CEngine&&) = delete;
 	void operator=(const CEngine&) = delete;
 	void operator=(CEngine&&) = delete;
 
 private:
-	bool running;
+    bool firstTick = true;
+	bool running = false;
 
 	std::stack<IFrame*> frames;
 
 	static double mxpos, mypos;
-	static bool keyboard[256];
+	static bool keyboard[512];
 	static bool mouse[16];
 
 	typedef std::chrono::duration<long long, std::nano> duration_t;
