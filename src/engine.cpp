@@ -1,25 +1,23 @@
 #include "engine.h"
-
 #include "frame.h"
 
-int CEngine::wndH;
-int CEngine::wndW;
-
-double CEngine::mxpos;
-double CEngine::mypos;
-
-bool CEngine::keyboard[1024];
+double CEngine::mxpos, CEngine::mypos;
+bool CEngine::keyboard[256];
 bool CEngine::mouse[16];
 
-void CEngine::CreateWindow(const char* title, int width, int height, bool fullscreen) {
+void CEngine::Init(std::string title, int width, int height, char* argv) {
+    SetCwd(argv);
+    CreateWindow(title, width, height);
+}
+
+void CEngine::CreateWindow(std::string title, int width, int height) {
 	wndTitle = title;
 	wndW = width;
 	wndH = height;
-	wndFull = fullscreen;
 
 	// Initialize GLFW and set the target version
 	if (glfwInit() != GLFW_TRUE)
-		throw new std::runtime_error("Error//Lib: GLFW Initialization Failed");
+		throw std::runtime_error("Error//Lib: GLFW Initialization Failed");
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -28,21 +26,21 @@ void CEngine::CreateWindow(const char* title, int width, int height, bool fullsc
 	glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE);
 
 	// Create and set the context as active
-	wnd = glfwCreateWindow(wndW, wndH, wndTitle, wndFull ? mon : nullptr, nullptr);
+	wnd = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 	if (wnd == nullptr)
-		throw new std::runtime_error("Error//Lib: GLFW Window Creation Failed");
+		throw std::runtime_error("Error//Lib: GLFW Window Creation Failed");
 
 	glfwMakeContextCurrent(wnd);
 
 	// Initialize GLEW
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
-		throw new std::runtime_error("Error//Lib: GLEW Initialization Failed\n");
+		throw std::runtime_error("Error//Lib: GLEW Initialization Failed\n");
 
-	// Retrieve the window size and create the OpenGL viewport accordingly
-	int w, h;
-	glfwGetFramebufferSize(wnd, &w, &h);
-	glViewport(0, 0, width, height);
+	// Retrieve the frame buffer size and create the OpenGL viewport accordingly
+	int fbWidth, fbHeight;
+	glfwGetFramebufferSize(wnd, &fbWidth, &fbHeight);
+	glViewport(0, 0, fbWidth, fbHeight);
 
 	// Initialize starting time so the first tick doesn't last forever
 	lastTime = std::chrono::steady_clock::now();
@@ -54,16 +52,17 @@ void CEngine::CreateWindow(const char* title, int width, int height, bool fullsc
 	glfwSetMouseButtonCallback(wnd, mousebutton_callback);
 	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // TODO: Might need this for text rendering functions, move to init there
+    //glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_CULL_FACE);
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void CEngine::SetCwd(char *argv) {
+void CEngine::SetCwd(char* argv) {
     std::string s(argv);
-    s = s.substr(0, s.find_last_of("/") + 1);
-    path = s;
+    s = s.substr(0, s.find_last_of('/') + 1);
+    cwd = s;
 }
 
 void CEngine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {

@@ -18,7 +18,15 @@ public:
 		return engine;
 	}
 
-	void CreateWindow(const char* title, int width, int height, bool fullscreen);
+    void Init(std::string title, int width, int height, char* cwd);
+
+
+    std::string getCwd() const { return cwd; }
+
+    int getWindowWidth() const { return wndW; }
+    int getWindowHeight() const { return wndH; }
+
+    void CreateWindow(std::string title, int width, int height);
 
 	void Cleanup();
 
@@ -38,12 +46,11 @@ public:
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 	static void mousebutton_callback(GLFWwindow* window, int button, int action, int mods);
 
-	GLFWmonitor* mon;
-	GLFWwindow* wnd;
-	static int wndW;
-	static int wndH;
-
-    std::string path;
+	GLFWwindow* wnd = nullptr;
+	int wndW = 0;
+	int wndH = 0;
+    std::string wndTitle = "";
+    std::string cwd = "";
 
 	bool Running() { return running; }
 	void Quit() { running = false; }
@@ -61,7 +68,7 @@ private:
 	std::stack<IFrame*> frames;
 
 	static double mxpos, mypos;
-	static bool keyboard[1024];
+	static bool keyboard[256];
 	static bool mouse[16];
 
 	typedef std::chrono::duration<long long, std::nano> duration_t;
@@ -74,7 +81,4 @@ private:
 	duration_t delta = duration_t(16666667);
 	duration_t accumulator = duration_t(0);
 	duration_t runTime = duration_t(0);
-
-	const char* wndTitle;
-	bool wndFull;
 };

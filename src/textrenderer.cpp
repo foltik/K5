@@ -33,7 +33,7 @@ TextRenderer::TextRenderer() {
 		)"
 	));
 
-	proj = glm::ortho(0.0f, (GLfloat)CEngine::wndW, 0.0f, (GLfloat)CEngine::wndH);
+	proj = glm::ortho(0.0f, (GLfloat)CEngine::Instance().getWindowWidth(), 0.0f, (GLfloat)CEngine::Instance().getWindowHeight());
 
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
@@ -56,8 +56,9 @@ TextRenderer::~TextRenderer() {
 }
 
 void TextRenderer::LoadFont(const char* path, FT_UInt height) {
-	std::string p = CEngine::Instance().path + std::string(path);
-    std::string name = p.substr(p.find_last_of("/") + 1);
+	// TODO: Change to take an std::string&
+	std::string p = CEngine::Instance().getCwd() + std::string(path);
+    std::string name = p.substr(p.find_last_of('/') + 1);
 
 	path = p.c_str();
 

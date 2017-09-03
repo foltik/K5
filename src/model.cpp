@@ -10,7 +10,8 @@ void Model::Draw(Shader* shader) {
 }
 
 void Model::genModel(const char* path) {
-	std::string p = CEngine::Instance().path + std::string(path);
+	// TODO: Change to take an std::string&
+	std::string p = CEngine::Instance().getCwd() + std::string(path);
     path = p.c_str();
 
 	Assimp::Importer importer;

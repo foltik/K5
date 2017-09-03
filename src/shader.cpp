@@ -2,8 +2,8 @@
 
 Shader::Shader(std::string vertexPath, std::string fragmentPath)
 {
-    vertexPath = CEngine::Instance().path + vertexPath;
-    fragmentPath = CEngine::Instance().path + fragmentPath;
+    vertexPath = CEngine::Instance().getCwd() + vertexPath;
+    fragmentPath = CEngine::Instance().getCwd() + fragmentPath;
 
 	std::string vertexCode;
 	std::string fragmentCode;
