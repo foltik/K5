@@ -8,7 +8,9 @@ bool CEngine::keyboard[512];
 bool CEngine::mouse[16];
 
 void CEngine::Init(std::string title, int width, int height, char* argv) {
-    SetCwd(argv);
+    // Update the CWD
+    std::string str = std::string(argv);
+    cwd = str.substr(0, str.find_last_of('/') + 1);
 
     CreateWindow(title, width, height);
 }
@@ -81,12 +83,6 @@ void CEngine::CreateWindow(std::string title, int width, int height) {
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void CEngine::SetCwd(char* argv) {
-    std::string s(argv);
-    s = s.substr(0, s.find_last_of('/') + 1);
-    cwd = s;
-}
-
 void CEngine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	if (action == GLFW_PRESS)
 		keyboard[key] = true;
@@ -142,6 +138,7 @@ void CEngine::Loop() {
 
 void CEngine::Render() {
 	frames.top()->Render();
+    glfwSwapBuffers(wnd);
 }
 
 void CEngine::ChangeFrame(IFrame* frame) {
