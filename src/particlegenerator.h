@@ -1,16 +1,15 @@
 #pragma once
-
-#include "particle.h"
-#include "shader.h"
-#include "texture.h"
-
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <vector>
-#include <tuple>
 #include <random>
 
+#include "particle.h"
+
+class Texture;
+class Shader;
+
+// TODO: FIX THIS HOLY CRAP
 template <typename T>
 class Variance {
 public:
@@ -23,7 +22,7 @@ public:
 
 class ParticleGenerator {
 public:
-    ParticleGenerator(glm::mat4 projection, Texture tex, int numParticles);
+    ParticleGenerator(glm::mat4 projection, const std::string tex, int numParticles);
     ~ParticleGenerator();
 
     void Tick();
@@ -35,7 +34,7 @@ private:
     Particle genParticle();
 
     Shader* shader;
-    Texture texture;
+    Texture* texture;
     GLuint vao;
     glm::mat4 proj;
 

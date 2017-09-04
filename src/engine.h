@@ -1,11 +1,6 @@
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
-#include <stdexcept>
-#include <cstdio>
 #include <stack>
 #include <chrono>
 

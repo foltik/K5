@@ -1,12 +1,10 @@
 #pragma once
 
-#include <fstream>
-#include <sstream>
+#include <string>
 #include <vector>
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 struct PointLight {
 	glm::vec3 pos;

@@ -30,7 +30,7 @@ set(SOURCE_FILES
         src/particlegenerator.h
         src/random.h
         src/resourcemanager.h
-        src/resourcemanager.cpp)
+        src/resourcemanager.cpp src/model.cpp)
 
 add_library(k5 STATIC ${SOURCE_FILES})
 

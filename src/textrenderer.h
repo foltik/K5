@@ -1,12 +1,14 @@
 #pragma once
-#include "engine.h"
-#include "shader.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
+#include <GL/glew.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include <map>
 #include <string>
+
+class Shader;
 
 struct Glyph {
 	GLuint texture;

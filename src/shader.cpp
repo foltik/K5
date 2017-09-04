@@ -1,5 +1,9 @@
 #include "shader.h"
 
+#include <glm/gtc/type_ptr.hpp>
+#include <fstream>
+#include <sstream>
+
 #include "engine.h"
 
 Shader::Shader(std::string vertexPath, std::string fragmentPath)

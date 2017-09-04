@@ -1,5 +1,10 @@
 #include "textrenderer.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
+#include "engine.h"
+#include "shader.h"
+
 TextRenderer::TextRenderer() {
 	if (FT_Init_FreeType(&ftlib))
 		throw new std::runtime_error("Error//Lib: FreeType Initialization Failed\n");

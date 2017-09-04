@@ -1,40 +1,51 @@
 #include "particlegenerator.h"
 
-ParticleGenerator::ParticleGenerator(glm::mat4 projection, Texture tex, int numParticles) : proj(projection), count(numParticles), texture(tex), colorVar(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f)) {
-    shader = new Shader(ShaderSource(
-        R"(
-            #version 330 core
-            layout (location = 0) in vec4 vertex;
-            out vec2 texCoord;
-            out vec4 partCol;
+#include <glm/gtc/matrix_transform.hpp>
 
-            uniform mat4 model;
-            uniform mat4 proj;
-            uniform vec4 partcolor;
-            uniform vec2 partpos;
-            uniform float partsize;
+#include "engine.h"
+#include "shader.h"
+#include "texture.h"
 
+constexpr const char* vertexSource = R"(
+#version 330 core
+layout (location = 0) in vec4 vertex;
+out vec2 texCoord;
+out vec4 partCol;
 
-            void main() {
-                texCoord = vertex.zw;
-                partCol = partcolor;
-                gl_Position = proj * model * vec4((vertex.xy * partsize) + partpos, 0.0, 1.0);
-            }
-        )",
-        R"(
-            #version 330 core
-            in vec2 texCoord;
-            in vec4 partCol;
-            out vec4 color;
+uniform mat4 model;
+uniform mat4 proj;
+uniform vec4 partcolor;
+uniform vec2 partpos;
+uniform float partsize;
 
-            uniform sampler2D sprite;
+void main() {
+    texCoord = vertex.zw;
+    partCol = partcolor;
+    gl_Position = proj * model * vec4((vertex.xy * partsize) + partpos, 0.0, 1.0);
+}
+)";
 
-            void main() {
-                color = partCol * texture(sprite, texCoord);
-            }
-        )"
-    ));
+constexpr const char* fragmentSource = R"(
+#version 330 core
+in vec2 texCoord;
+in vec4 partCol;
+out vec4 color;
 
+uniform sampler2D sprite;
+
+void main() {
+    color = partCol * texture(sprite, texCoord);
+}
+)";
+
+ParticleGenerator::ParticleGenerator(glm::mat4 projection, const std::string tex, int numParticles) {
+    shader = new Shader(ShaderSource(vertexSource, fragmentSource));
+    texture = CEngine::Instance().resourceManager().loadTexture(tex);
+
+    colorVar = glm::vec4(0.0f, 1.0f, 1.0f, 1.0f);
+
+    proj = projection;
+    count = numParticles;
 
     GLfloat quad[6][4] = {
         0.0f, 1.0f, 0.0f, 1.0f,
@@ -44,10 +55,6 @@ ParticleGenerator::ParticleGenerator(glm::mat4 projection, Texture tex, int numP
         1.0f, 1.0f, 1.0f, 1.0f,
         1.0f, 0.0f, 1.0f, 0.0f
     };
-
-    // BODGE!!!
-    // Must add real random number engine
-    srand((unsigned)time(NULL));
 
     GLuint vbo;
     glGenBuffers(1, &vbo);
@@ -84,7 +91,7 @@ void ParticleGenerator::Draw() {
         shader->uVector2("partpos", 0.0f, 0.0f);
         shader->uVector4("partcolor", particle.getColor());
         shader->uFloat("partsize", 10.0f);
-        texture.Use();
+        texture->Use();
         glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);

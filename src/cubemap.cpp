@@ -1,6 +1,81 @@
 #include "cubemap.h"
 
+#include <SOIL/SOIL.h>
+
+#include "shader.h"
+
+constexpr const char* vertexSource = R"(
+#version 330 core
+layout (location = 0) in vec3 pos;
+
+out vec3 sampleDir;
+uniform mat4 proj;
+uniform mat4 view;
+
+void main() {
+    sampleDir = pos;
+    gl_Position = proj * view * vec4(pos, 1.0);
+}
+)";
+
+constexpr const char* fragmentSource = R"(
+#version 330 core
+out vec4 color;
+in vec3 sampleDir;
+uniform samplerCube cubemap;
+
+void main() {
+    color = texture(cubemap, sampleDir);
+}
+)";
+
+constexpr float verts[] = {
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        -1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f
+};
+
 Cubemap::Cubemap(const char* textures[6]) {
+    shader = new Shader(ShaderSource(vertexSource, fragmentSource));
+
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
 
@@ -41,16 +116,21 @@ Cubemap::Cubemap(const char* textures[6]) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
 
     glBindVertexArray(0);
 }
+
+Cubemap::~Cubemap() {
+    delete shader;
+}
+
 void Cubemap::Draw(glm::mat4 proj, glm::mat4 view) {
     glDepthMask(GL_FALSE);
 
-    shader.Use();
-    shader.uMatrix4("view", glm::mat4(glm::mat3(view)));
-    shader.uMatrix4("proj", proj);
+    shader->Use();
+    shader->uMatrix4("view", glm::mat4(glm::mat3(view)));
+    shader->uMatrix4("proj", proj);
 
     glBindVertexArray(vao);
     glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
