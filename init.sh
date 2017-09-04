@@ -9,19 +9,18 @@ if [ "$#" != 2 ]; then
 fi
 
 mkdir -p $DEST
-
-cp base/main.cpp $DEST
-cp base/mainframe.cpp $DEST
-cp base/mainframe.h $DEST
-cp base/CMakeLists.txt $DEST
-
+mkdir -p $DEST/src
 mkdir -p $DEST/models
 mkdir -p $DEST/textures
 mkdir -p $DEST/shaders
 mkdir -p $DEST/fonts
 
+cp base/main.cpp $DEST/src/
+cp base/mainframe.cpp $DEST/src/
+cp base/mainframe.h $DEST/src/
+cp base/CMakeLists.txt $DEST
 cp textures/* $DEST/textures/
 cp models/* $DEST/models/
 
-sed -i -e "s/k5starter/$NAME/g" $DEST/main.cpp
+sed -i -e "s/k5starter/$NAME/g" $DEST/src/main.cpp
 sed -i -e "s/k5starter/$NAME/g" $DEST/CMakeLists.txt

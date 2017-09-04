@@ -1,0 +1,15 @@
+/usr/local/lib/libk5.a
+/usr/local/include/k5/camera.h
+/usr/local/include/k5/engine.h
+/usr/local/include/k5/frame.h
+/usr/local/include/k5/k5.h
+/usr/local/include/k5/model.h
+/usr/local/include/k5/shader.h
+/usr/local/include/k5/textrenderer.h
+/usr/local/include/k5/texture.h
+/usr/local/include/k5/cubemap.h
+/usr/local/include/k5/spriterenderer.h
+/usr/local/include/k5/particle.h
+/usr/local/include/k5/particlegenerator.h
+/usr/local/include/k5/random.h
+/usr/local/include/k5/resourcemanager.h

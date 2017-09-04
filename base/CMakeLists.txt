@@ -5,7 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(/usr/include/freetype2/)
 
-set(SOURCE_FILES main.cpp mainframe.cpp mainframe.h) 
+set(SOURCE_FILES 
+    src/main.cpp 
+    src/mainframe.cpp 
+    src/mainframe.h) 
 
 add_executable(k5starter ${SOURCE_FILES})
 

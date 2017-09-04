@@ -1,0 +1,7 @@
+/home/lain/Documents/dev/k5/build/CMakeFiles/install/strip.dir
+/home/lain/Documents/dev/k5/build/CMakeFiles/edit_cache.dir
+/home/lain/Documents/dev/k5/build/CMakeFiles/k5.dir
+/home/lain/Documents/dev/k5/build/CMakeFiles/list_install_components.dir
+/home/lain/Documents/dev/k5/build/CMakeFiles/install/local.dir
+/home/lain/Documents/dev/k5/build/CMakeFiles/rebuild_cache.dir
+/home/lain/Documents/dev/k5/build/CMakeFiles/install.dir
