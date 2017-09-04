@@ -4,7 +4,7 @@
 
 class random {
 public:
-    random(auto seed = time(nullptr)) : engine(seed) {}
+    explicit random(auto seed = time(nullptr)) : engine(seed) {}
 
     template <typename T>
     T genNumber(T low, T high) {
