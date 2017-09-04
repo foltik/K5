@@ -20,7 +20,6 @@ set(SOURCE_FILES
         src/shader.h
         src/textrenderer.cpp
         src/textrenderer.h
-        src/texture.cpp
         src/texture.h
         src/spriterenderer.cpp
         src/spriterenderer.h
@@ -30,12 +29,12 @@ set(SOURCE_FILES
         src/particle.h
         src/particlegenerator.cpp
         src/particlegenerator.h
-        src/random.h)
+        src/random.h src/resourcemanager.h src/resourcemanager.cpp)
 
 add_library(k5 STATIC ${SOURCE_FILES})
 
 set_target_properties(k5 PROPERTIES
-                      PUBLIC_HEADER "src/camera.h;src/engine.h;src/frame.h;src/k5.h;src/mesh.h;src/model.h;src/shader.h;src/textrenderer.h;src/texture.h;src/cubemap.h;src/spriterenderer.h;src/particle.h;src/particlegenerator.h;src/random.h")
+                      PUBLIC_HEADER "src/camera.h;src/engine.h;src/frame.h;src/k5.h;src/mesh.h;src/model.h;src/shader.h;src/textrenderer.h;src/texture.h;src/cubemap.h;src/spriterenderer.h;src/particle.h;src/particlegenerator.h;src/random.h;src/resourcemanager.h")
 
 install(TARGETS k5
         ARCHIVE DESTINATION lib
