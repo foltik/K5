@@ -1,2 +1,0 @@
-/usr/bin/ar qc libk5.a  CMakeFiles/k5.dir/src/camera.cpp.o CMakeFiles/k5.dir/src/engine.cpp.o CMakeFiles/k5.dir/src/shader.cpp.o CMakeFiles/k5.dir/src/textrenderer.cpp.o CMakeFiles/k5.dir/src/spriterenderer.cpp.o CMakeFiles/k5.dir/src/cubemap.cpp.o CMakeFiles/k5.dir/src/particle.cpp.o CMakeFiles/k5.dir/src/particlegenerator.cpp.o CMakeFiles/k5.dir/src/resourcemanager.cpp.o CMakeFiles/k5.dir/src/model.cpp.o
-/usr/bin/ranlib libk5.a
