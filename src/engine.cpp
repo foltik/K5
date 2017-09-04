@@ -141,7 +141,7 @@ void CEngine::ChangeFrame(IFrame* frame) {
 	}
 
 	frames.push(frame);
-	frames.top()->Init(this);
+	frames.top()->Init();
 }
 
 void CEngine::PushFrame(IFrame* frame) {
@@ -149,7 +149,7 @@ void CEngine::PushFrame(IFrame* frame) {
 		frames.top()->Pause();
 
 	frames.push(frame);
-	frames.top()->Init(this);
+	frames.top()->Init();
 }
 
 void CEngine::PopFrame() {

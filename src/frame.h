@@ -4,7 +4,7 @@ class CEngine;
 
 class IFrame {
 public:
-	virtual void Init(CEngine* e) = 0;
+	virtual void Init() = 0;
 	virtual void Cleanup() = 0;
 
 	virtual void Pause() = 0;
