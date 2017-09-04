@@ -75,12 +75,6 @@ void CEngine::CreateWindow(std::string title, int width, int height) {
 	glfwSetCursorPosCallback(wnd, mouse_callback);
 	glfwSetMouseButtonCallback(wnd, mousebutton_callback);
 	glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-
-    // TODO: Might need this for text rendering functions, move to init there
-    //glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_CULL_FACE);
-    //glEnable(GL_BLEND);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void CEngine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
