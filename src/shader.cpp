@@ -1,5 +1,7 @@
 #include "shader.h"
 
+#include "engine.h"
+
 Shader::Shader(std::string vertexPath, std::string fragmentPath)
 {
     vertexPath = CEngine::Instance().getCwd() + vertexPath;

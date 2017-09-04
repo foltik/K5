@@ -3,6 +3,8 @@ project(k5)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_BUILD_TYPE RelWithDebInfo)
+
 include_directories(/usr/include/freetype2/)
 
 set(SOURCE_FILES
@@ -12,9 +14,6 @@ set(SOURCE_FILES
         src/engine.h
         src/frame.h
         src/k5.h
-        src/mesh.cpp
-        src/mesh.h
-        src/model.cpp
         src/model.h
         src/shader.cpp
         src/shader.h
@@ -29,12 +28,14 @@ set(SOURCE_FILES
         src/particle.h
         src/particlegenerator.cpp
         src/particlegenerator.h
-        src/random.h src/resourcemanager.h src/resourcemanager.cpp)
+        src/random.h
+        src/resourcemanager.h
+        src/resourcemanager.cpp)
 
 add_library(k5 STATIC ${SOURCE_FILES})
 
 set_target_properties(k5 PROPERTIES
-                      PUBLIC_HEADER "src/camera.h;src/engine.h;src/frame.h;src/k5.h;src/mesh.h;src/model.h;src/shader.h;src/textrenderer.h;src/texture.h;src/cubemap.h;src/spriterenderer.h;src/particle.h;src/particlegenerator.h;src/random.h;src/resourcemanager.h")
+                      PUBLIC_HEADER "src/camera.h;src/engine.h;src/frame.h;src/k5.h;src/model.h;src/shader.h;src/textrenderer.h;src/texture.h;src/cubemap.h;src/spriterenderer.h;src/particle.h;src/particlegenerator.h;src/random.h;src/resourcemanager.h")
 
 install(TARGETS k5
         ARCHIVE DESTINATION lib
