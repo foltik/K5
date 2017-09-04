@@ -5,6 +5,7 @@
 #include "engine.h"
 #include "shader.h"
 #include "texture.h"
+#include "random.h"
 
 constexpr const char* vertexSource = R"(
 #version 330 core
@@ -42,7 +43,7 @@ ParticleGenerator::ParticleGenerator(glm::mat4 projection, const std::string tex
     shader = new Shader(ShaderSource(vertexSource, fragmentSource));
     texture = CEngine::Instance().resourceManager().loadTexture(tex);
 
-    colorVar = glm::vec4(0.0f, 1.0f, 1.0f, 1.0f);
+    random = new Random();
 
     proj = projection;
     count = numParticles;
@@ -77,6 +78,7 @@ ParticleGenerator::ParticleGenerator(glm::mat4 projection, const std::string tex
 
 ParticleGenerator::~ParticleGenerator() {
     delete shader;
+    delete random;
 }
 
 void ParticleGenerator::Draw() {
@@ -110,16 +112,12 @@ void ParticleGenerator::Tick() {
     }
 }
 
-float rdFloat(float min, float max) {
-    return ((float)rand() / ((float)RAND_MAX / (max - min))) + min;
-}
-
 Particle ParticleGenerator::genParticle() {
     Particle p(glm::vec2(0.0f), glm::vec2(0.0f), glm::vec4(0.0f), glm::vec4(0.0f), 10.0f, 0.1f);
-    p.setVel(glm::vec2(rdFloat(-0.3f, 0.3f), rdFloat(-0.3f, 0.3f)));
+    p.setVel(glm::vec2(random->genNumber(-0.3f, 0.3f), random->genNumber(-0.3f, 0.3f)));
     p.setPos(pos);
     p.setColor(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
-    p.setLife(rdFloat(3.0f, 10.0f));
+    p.setLife(random->genNumber(3.0f, 10.0f));
     p.setColorDecay(glm::vec4(0.0f, 0.0f, 0.0f, -1 / (p.getLife() / p.getLifeDecay())));
     return p;
 }

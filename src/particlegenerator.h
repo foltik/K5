@@ -1,28 +1,18 @@
 #pragma once
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <string>
 #include <vector>
-#include <random>
 
 #include "particle.h"
 
+class Random;
 class Texture;
 class Shader;
 
-// TODO: FIX THIS HOLY CRAP
-template <typename T>
-class Variance {
-public:
-    T generate() {
-        return ((float)rand() / (float)(RAND_MAX / (max - min))) + min;
-    }
-    T min;
-    T max;
-};
-
 class ParticleGenerator {
 public:
-    ParticleGenerator(glm::mat4 projection, const std::string tex, int numParticles);
+    ParticleGenerator(glm::mat4 projection, std::string tex, int numParticles);
     ~ParticleGenerator();
 
     void Tick();
@@ -33,6 +23,8 @@ public:
 private:
     Particle genParticle();
 
+    Random* random;
+
     Shader* shader;
     Texture* texture;
     GLuint vao;
@@ -42,9 +34,4 @@ private:
 
     int count;
     std::vector<Particle> particles;
-
-    Variance<float> lifeVar;
-    glm::vec2 posVar;
-    glm::vec2 velVar;//Variance<glm::vec2> velVar;
-    glm::vec4 colorVar;//Variance<glm::vec4> colorVar;
 };
