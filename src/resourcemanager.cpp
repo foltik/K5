@@ -8,11 +8,13 @@
 
 // Free each resource loaded by the manager
 ResourceManager::~ResourceManager() {
-    for (auto& pair : loadedTextures)
-        delete pair.second;
+    for (auto& [path, texture] : loadedTextures) {
+        delete texture;
+    }
 
-    for (auto& pair : loadedModels)
-        delete pair.second;
+    for (auto& [path, model] : loadedModels) {
+        delete model;
+    }
 }
 
 // Looks for a texture to load, starting in "CWD/textures/"
