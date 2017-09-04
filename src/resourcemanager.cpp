@@ -1,9 +1,8 @@
 #include "resourcemanager.h"
 
 ResourceManager::~ResourceManager() {
-    for (Texture* texture : loadedTextures) {
-        delete texture;
-    }
+    for (auto& pair : loadedTextures)
+        delete pair.second;
 }
 
 // Looks for a texture to load, starting in "CWD/textures/"
