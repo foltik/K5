@@ -21,7 +21,7 @@ Texture* ResourceManager::loadTexture(const std::string file) {
 }
 
 Texture* ResourceManager::genTexture(const std::string& path) {
-    auto* texture = new Texture();
+    auto* texture = new Texture;
 
 	// Generate the texture object for OpenGL
 	glGenTextures(1, &texture->textureId);
@@ -30,11 +30,12 @@ Texture* ResourceManager::genTexture(const std::string& path) {
 	glBindTexture(GL_TEXTURE_2D, texture->textureId);
 
 	// Load the texture
-
-	unsigned char* data = SOIL_load_image(path, &texture->width, &texture->height, nullptr, SOIL_LOAD_RGBA);
+	unsigned char* data = SOIL_load_image(path.c_str(), &texture->width, &texture->height, nullptr, SOIL_LOAD_RGBA);
 	if (data == nullptr) {
+        // If the texture wasn't able to be loaded, use an error texture instead
 		printf("Error//TextureLoad: Texture %s failed to load\n", path.c_str());
-		return;
+        data = SOIL_load_image((CEngine::Instance().getCwd() + std::string("/textures/__error.png")).c_str(),
+                               &texture->width, &texture->height, nullptr, SOIL_LOAD_RGB);
 	}
 
 	// Load the texture data into the texture object and generate mipmaps
