@@ -45,8 +45,8 @@ Texture* ResourceManager::genTexture(const std::string& path, TextureType type) 
 	if (data == nullptr) {
         // If the texture wasn't able to be loaded, use an error texture instead
 		printf("Error//TextureLoad: Texture %s failed to load\n", path.c_str());
-        std::string errorTexturePath = CEngine::Instance().getCwd() + "/textures/__error.png";
-        data = SOIL_load_image(errorTexturePath.c_str(), &texture->width, &texture->height, nullptr, SOIL_LOAD_RGB);
+        std::string errorTexturePath = CEngine::Instance().getCwd() + "textures/__error.png";
+        data = SOIL_load_image(errorTexturePath.c_str(), &texture->width, &texture->height, nullptr, SOIL_LOAD_RGBA);
         texture->path = errorTexturePath;
 	}
 
@@ -94,7 +94,8 @@ Model* ResourceManager::genModel(const std::string &path) {
     if (!scene || !scene->mRootNode || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) {
 		printf("Error//ModelLoad: %s\n", importer.GetErrorString());
         std::string errorModelPath = CEngine::Instance().getCwd() + "models/__error.obj";
-        scene = importer.ReadFile(path,
+        importer.FreeScene();
+        scene = importer.ReadFile(errorModelPath,
                                   aiProcess_Triangulate |
                                   aiProcess_FlipUVs |
                                   aiProcess_GenNormals |
