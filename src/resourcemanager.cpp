@@ -1,6 +1,8 @@
 #include "resourcemanager.h"
 
 #include <SOIL/SOIL.h>
+//#define STB_IMAGE_IMPLEMENTATION
+//#include "stb_image.h"
 #include <assimp/Importer.hpp>
 
 #include "engine.h"
@@ -8,18 +10,16 @@
 
 // Free each resource loaded by the manager
 ResourceManager::~ResourceManager() {
-    for (auto& [path, texture] : loadedTextures) {
-        delete texture;
-    }
+    for (auto& pair : loadedTextures)
+        delete pair.second;
 
-    for (auto& [path, model] : loadedModels) {
-        delete model;
-    }
+    for (auto& pair : loadedModels)
+        delete pair.second;
 }
 
 // Looks for a texture to load, starting in "CWD/textures/"
 Texture* ResourceManager::loadTexture(const std::string file, TextureType type) {
-    if (loadedTextures.find(file) != loadedTextures.end()) {
+    if (loadedTextures.count(file)) {
         // If it was already loaded, just return it
         return loadedTextures[file];
     } else {
@@ -70,7 +70,7 @@ Texture* ResourceManager::genTexture(const std::string& path, TextureType type) 
 }
 
 Model* ResourceManager::loadModel(std::string file) {
-    if (loadedModels.find(file) != loadedModels.end()) {
+    if (loadedModels.count(file)) {
         // If it was already loaded, just return it
         return loadedModels[file];
     } else {
