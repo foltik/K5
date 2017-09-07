@@ -14,7 +14,9 @@ public:
     const GameObject& AddChild(GameObject& child);
     const GameObject& AddComponent(GameComponent& component);
 
-    void Input();
+    Transform& GetTransform();
+
+    void Input(bool keyboard[512], bool mouse[16], float mouseX, float mouseY);
     void Update();
     void Render();
 

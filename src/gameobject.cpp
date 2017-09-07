@@ -24,15 +24,21 @@ const GameObject& GameObject::AddChild(GameObject& child) {
 }
 
 const GameObject& GameObject::AddComponent(GameComponent& component) {
+    component.SetParent(*this);
+    components.push_back(&component);
     return *this;
 }
 
-void GameObject::Input() {
+Transform& GameObject::GetTransform() {
+    return *transform;
+}
+
+void GameObject::Input(bool keyboard[512], bool mouse[16], float mouseX, float mouseY) {
     for (GameComponent* component : components)
-        component->Input();
+        component->Input(keyboard, mouse, mouseX, mouseY);
 
     for (GameObject* child : children)
-        child->Input();
+        child->Input(keyboard, mouse, mouseX, mouseY);
 }
 
 void GameObject::Update() {
