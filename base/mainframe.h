@@ -19,7 +19,7 @@ public:
     void Pause() override;
     void Resume() override;
 
-    void ProcessInput(bool *keyboard, bool *mouse, double mxpos, double mypos) override;
+    void ProcessInput(bool keyboard[512], bool mouse[16], double mxpos, double mypos) override;
     void Loop() override;
     void Render() override;
 

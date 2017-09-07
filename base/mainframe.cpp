@@ -6,7 +6,7 @@ void MainFrame::Cleanup() {}
 void MainFrame::Pause() {}
 void MainFrame::Resume() {}
 
-void MainFrame::ProcessInput(bool *keyboard, bool *mouse, double mxpos, double mypos) {
+void MainFrame::ProcessInput(bool keyboard[512], bool mouse[16], double mxpos, double mypos) {
     if (keyboard[GLFW_KEY_ESCAPE])
 		CEngine::Instance().Quit();
 }
