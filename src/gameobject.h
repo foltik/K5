@@ -4,6 +4,7 @@
 #include "gamecomponent.h"
 
 class Transform;
+class RenderEngine;
 
 class GameObject {
 public:
@@ -18,7 +19,7 @@ public:
 
     void Input(bool keyboard[512], bool mouse[16], float mouseX, float mouseY);
     void Update();
-    void Render();
+    void Render(RenderEngine& renderEngine);
 
 private:
     Transform* transform;

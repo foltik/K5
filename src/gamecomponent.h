@@ -2,6 +2,7 @@
 #include <cassert>
 
 class GameObject;
+class RenderEngine;
 
 class GameComponent {
 public:
@@ -17,7 +18,7 @@ public:
 
     virtual void Input(bool keyboard[512], bool mouse[16], float mouseX, float mouseY) = 0;
     virtual void Update() = 0;
-    virtual void Render() = 0;
+    virtual void Render(RenderEngine& renderEngine) = 0;
 
 private:
     GameObject* parent = nullptr;

@@ -1,5 +1,6 @@
 #pragma once
 #include "engine.h"
+#include "renderengine.h"
 #include "frame.h"
 
 #include "textrenderer.h"

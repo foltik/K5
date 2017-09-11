@@ -37,12 +37,17 @@ set(SOURCE_FILES
         src/transform.cpp
         src/transform.h
         src/gamecomponent.h
-        )
+        src/renderengine.cpp
+        src/renderengine.h
+        src/light.cpp
+        src/light.h
+        src/modelrenderer.cpp
+        src/modelrenderer.h)
 
 add_library(k5 STATIC ${SOURCE_FILES})
 
 set_target_properties(k5 PROPERTIES
-                      PUBLIC_HEADER "src/camera.h;src/engine.h;src/frame.h;src/k5.h;src/model.h;src/shader.h;src/textrenderer.h;src/texture.h;src/cubemap.h;src/spriterenderer.h;src/particle.h;src/particlegenerator.h;src/random.h;src/resourcemanager.h;src/gameobject.h;src/transform.h;src/gamecomponent.h")
+                      PUBLIC_HEADER "src/camera.h;src/engine.h;src/frame.h;src/k5.h;src/model.h;src/shader.h;src/textrenderer.h;src/texture.h;src/cubemap.h;src/spriterenderer.h;src/particle.h;src/particlegenerator.h;src/random.h;src/resourcemanager.h;src/gameobject.h;src/transform.h;src/gamecomponent.h;src/renderengine.h;src/light.h")
 
 install(TARGETS k5
         ARCHIVE DESTINATION lib

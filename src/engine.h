@@ -5,6 +5,7 @@
 #include <chrono>
 
 #include "resourcemanager.h"
+#include "renderengine.h"
 
 class IFrame;
 
@@ -54,6 +55,7 @@ private:
     void Cleanup();
 
     ResourceManager resManager = ResourceManager();
+	RenderEngine renderEngine;
 
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
