@@ -5,6 +5,7 @@
 
 class Camera;
 class Light;
+class Shader;
 
 class RenderEngine {
 public:
@@ -13,6 +14,7 @@ public:
     void Render(GameObject& object);
 
 private:
-    std::vector<Camera*> cameras;
-    std::vector<Light*> lights;
+    std::vector<Camera*> cameras; std::vector<Light*> lights;
+
+    Shader* forward;
 };

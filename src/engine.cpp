@@ -131,7 +131,6 @@ void CEngine::Loop() {
 
 void CEngine::Render() {
 	frames.top()->Render(renderEngine);
-    glfwSwapBuffers(wnd);
 }
 
 void CEngine::ChangeFrame(IFrame* frame) {

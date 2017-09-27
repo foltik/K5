@@ -11,7 +11,7 @@ public:
 
     void Input(bool keyboard[512], bool mouse[16], float mouseX, float mouseY) override;
     void Update() override;
-    void Render(RenderEngine &renderEngine) override;
+    void Render(Shader& shader, RenderEngine &renderEngine) override;
 
 private:
     Shader* shader;

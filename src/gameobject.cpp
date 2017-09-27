@@ -2,6 +2,9 @@
 
 #include "transform.h"
 #include "renderengine.h"
+#include "shader.h"
+
+#include <cassert>
 
 GameObject::GameObject() {
     transform = new Transform();
@@ -50,10 +53,10 @@ void GameObject::Update() {
         child->Update();
 }
 
-void GameObject::Render(RenderEngine& renderEngine) {
+void GameObject::Render(Shader& shader ,RenderEngine& renderEngine) {
     for (GameComponent* component : components)
-        component->Render(renderEngine);
+        component->Render(shader, renderEngine);
 
     for (GameObject* child : children)
-        child->Render(renderEngine);
+        child->Render(shader, renderEngine);
 }

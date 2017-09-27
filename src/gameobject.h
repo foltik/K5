@@ -5,6 +5,7 @@
 
 class Transform;
 class RenderEngine;
+class Shader;
 
 class GameObject {
 public:
@@ -19,7 +20,7 @@ public:
 
     void Input(bool keyboard[512], bool mouse[16], float mouseX, float mouseY);
     void Update();
-    void Render(RenderEngine& renderEngine);
+    void Render(Shader& shader, RenderEngine& renderEngine);
 
 private:
     Transform* transform;

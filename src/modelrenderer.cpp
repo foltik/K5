@@ -18,8 +18,8 @@ void ModelRenderer::Update() {
 
 }
 
-void ModelRenderer::Render(RenderEngine &renderEngine) {
-    shader->Use();
-    shader->uMatrix4("model", GetParent().GetTransform().GetMatrix());
-    model->Draw(shader);
+void ModelRenderer::Render(Shader& shader, RenderEngine &renderEngine) {
+    shader.Use();
+    shader.uMatrix4("model", GetParent().GetTransform().GetMatrix());
+    model->Draw(&shader);
 }

@@ -35,6 +35,8 @@ public:
     int getWindowWidth() const { return wndW; }
     int getWindowHeight() const { return wndH; }
 
+	GLFWwindow* getWindow() const { return wnd; }
+
     void disableCursor() { glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_DISABLED); }
     void enableCursor() { glfwSetInputMode(wnd, GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
 
@@ -55,7 +57,7 @@ private:
     void Cleanup();
 
     ResourceManager resManager = ResourceManager();
-	RenderEngine renderEngine;
+	RenderEngine renderEngine = RenderEngine();
 
 	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
