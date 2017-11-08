@@ -9,12 +9,19 @@ class Shader;
 
 class RenderEngine {
 public:
-    RenderEngine();
+    RenderEngine() = default;
+    ~RenderEngine();
+    void Init();
 
     void Render(GameObject& object);
 
-private:
-    std::vector<Camera*> cameras; std::vector<Light*> lights;
+    void SetCamera(Camera* camera);
 
-    Shader* forward;
+private:
+    std::vector<Camera*> cameras;
+    Camera* currentCamera;
+
+    std::vector<Light*> lights;
+
+    Shader* ambient;
 };

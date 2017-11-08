@@ -1,7 +1,11 @@
 #include "camera.h"
 
+#include "gameobject.h"
+#include "transform.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 
+/*
 Camera::Camera() : pos(0.0f), angle(0.0f) {}
 
 Camera::Camera(glm::vec3 position, glm::vec2 _angle) {
@@ -87,3 +91,24 @@ void Camera::SetSens(float sensitivity) { sens = sensitivity; }
 glm::mat4 Camera::GetView() { return view; }
 glm::vec3 Camera::GetPos() { return pos; }
 glm::vec2 Camera::GetAngle() { return angle; }
+*/
+
+void Camera::Input(bool* keyboard, bool* mouse, float mouseX, float mouseY) {
+
+}
+
+void Camera::Update() {
+
+}
+
+void Camera::Render(Shader& shader, RenderEngine& renderEngine) {
+
+}
+
+void Camera::SetProjection(const glm::mat4& projection) {
+    Camera::projection = projection;
+}
+
+glm::mat4 Camera::GetViewProjection() {
+    return projection * GetParent().GetTransform().GetMatrix();
+}

@@ -13,7 +13,6 @@ void MainFrame::ProcessInput(bool keyboard[512], bool mouse[16], double mxpos, d
 
 void MainFrame::Loop() {}
 
-void MainFrame::Render() {
-    glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+void MainFrame::Render(RenderEngine& renderEngine) {
+
 }

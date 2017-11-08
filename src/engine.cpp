@@ -12,6 +12,8 @@ void CEngine::Init(std::string title, int width, int height, char* argv) {
     cwd = str.substr(0, str.find_last_of('/') + 1);
 
     CreateWindow(title, width, height);
+
+    renderEngine.Init();
 }
 
 void CEngine::Launch() {

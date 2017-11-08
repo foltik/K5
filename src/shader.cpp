@@ -17,22 +17,29 @@ Shader::Shader(std::string vertexPath, std::string fragmentPath)
 	std::ifstream vertexFile(vertexPath, std::ios::in | std::ios::binary);
 	std::ifstream fragmentFile(fragmentPath, std::ios::in | std::ios::binary);
 
-    if (vertexFile && fragmentFile) {
-        vertexFile.seekg(0, std::ios::end);
-        vertexCode.resize((unsigned long)vertexFile.tellg());
-        vertexFile.seekg(0, std::ios::beg);
-        vertexFile.read(&vertexCode[0], vertexCode.size());
-        vertexFile.close();
-
-        fragmentFile.seekg(0, std::ios::end);
-        fragmentCode.resize((unsigned long)fragmentFile.tellg());
-        fragmentFile.seekg(0, std::ios::beg);
-        fragmentFile.read(&fragmentCode[0], fragmentCode.size());
-        fragmentFile.close();
-    } else {
-        printf("Error//ShaderLoad: Failed to open file %s\n", !vertexFile ? vertexPath : !fragmentFile ? fragmentPath : "null");
-        return;
+    bool fail = false;
+    if (!vertexFile) {
+        printf("Error//ShaderLoad: Failed to open file %s\n", vertexPath.c_str());
+        fail = true;
     }
+    if (!fragmentFile) {
+        printf("Error//ShaderLoad: Failed to open file %s\n", fragmentPath.c_str());
+        fail = true;
+    }
+    if (fail)
+        return;
+
+    vertexFile.seekg(0, std::ios::end);
+    vertexCode.resize((unsigned long)vertexFile.tellg());
+    vertexFile.seekg(0, std::ios::beg);
+    vertexFile.read(&vertexCode[0], vertexCode.size());
+    vertexFile.close();
+
+    fragmentFile.seekg(0, std::ios::end);
+    fragmentCode.resize((unsigned long)fragmentFile.tellg());
+    fragmentFile.seekg(0, std::ios::beg);
+    fragmentFile.read(&fragmentCode[0], fragmentCode.size());
+    fragmentFile.close();
 
     compileShader(vertexCode.c_str(), fragmentCode.c_str());
 }

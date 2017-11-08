@@ -1,6 +1,9 @@
 #pragma once
 #include <glm/glm.hpp>
 
+#include "gamecomponent.h"
+
+/*
 class Camera {
 public:
 	Camera();
@@ -36,4 +39,19 @@ private:
 	float lastY;
 	float speed = 1.0f;
 	float sens = 1.0f;
+};
+*/
+
+class Camera : public GameComponent {
+public:
+    void Input(bool* keyboard, bool* mouse, float mouseX, float mouseY) override;
+    void Update() override;
+    void Render(Shader& shader, RenderEngine& renderEngine) override;
+
+    glm::mat4 GetViewProjection();
+
+    void SetProjection(const glm::mat4& projection);
+
+private:
+    glm::mat4 projection;
 };

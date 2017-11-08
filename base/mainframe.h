@@ -21,7 +21,7 @@ public:
 
     void ProcessInput(bool keyboard[512], bool mouse[16], double mxpos, double mypos) override;
     void Loop() override;
-    void Render() override;
+    void Render(RenderEngine& renderEngine) override;
 
 protected:
     MainFrame() = default;
