@@ -11,7 +11,7 @@ TextRenderer::TextRenderer() {
 
 	shader = new Shader(ShaderSource(
 		R"(
-			#version 330 core
+			#version 330 Core
 			layout (location = 0) in vec4 vertex;
 			out vec2 TexCoord;
 
@@ -24,7 +24,7 @@ TextRenderer::TextRenderer() {
 		)",
 
 		R"(
-			#version 330 core
+			#version 330 Core
 			in vec2 TexCoord;
 			out vec4 color;
 

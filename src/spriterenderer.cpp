@@ -6,7 +6,7 @@
 #include "shader.h"
 
 constexpr const char* vertexSource = R"(
-#version 330 core
+#version 330 Core
 layout (location = 0) in vec4 vertex;
 out vec2 texCoord;
 
@@ -20,7 +20,7 @@ void main() {
 )";
 
 constexpr const char* fragmentSource = R"(
-#version 330 core
+#version 330 Core
 in vec2 texCoord;
 out vec4 color;
 

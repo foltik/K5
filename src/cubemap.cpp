@@ -5,7 +5,7 @@
 #include "shader.h"
 
 constexpr const char* vertexSource = R"(
-#version 330 core
+#version 330 Core
 layout (location = 0) in vec3 pos;
 
 out vec3 sampleDir;
@@ -19,7 +19,7 @@ void main() {
 )";
 
 constexpr const char* fragmentSource = R"(
-#version 330 core
+#version 330 Core
 out vec4 color;
 in vec3 sampleDir;
 uniform samplerCube cubemap;
