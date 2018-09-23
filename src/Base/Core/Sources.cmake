@@ -1,9 +1,9 @@
-set(K5_CORE_CORE_INC
+set(K5_CORE_BASE_INC
     "Core/CoreApp.h")
 
-set(K5_CORE_CORE_SRC
+set(K5_CORE_BASE_SRC
     "Core/CoreApp.cpp")
 
 set(K5_CORE_SRC
-    ${K5_CORE_CORE_SRC}
-    ${K5_CORE_CORE_INC})
+    ${K5_CORE_BASE_SRC}
+    ${K5_CORE_BASE_INC})

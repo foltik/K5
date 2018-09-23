@@ -44,7 +44,7 @@ extern void __cdecl __debugbreak(void)
 #define K5_ASSERT(...) _K5_GET_ASSERT(__VA_ARGS__,\
         _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG,\
         _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG,\
-        _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_NNOSG) (__VA_ARGS__)
+        _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_MSG, _K5_ASSERT_NOMSG) (__VA_ARGS__)
 
 #define _K5_ASSERT_MSG(expr, message, ...)\
         if (!(expr)) {\
