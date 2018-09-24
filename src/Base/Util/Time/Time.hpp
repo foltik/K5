@@ -5,18 +5,18 @@
 
 namespace k5 {
     namespace Time {
-        using seconds = std::chrono::seconds;
-        using milliseconds = std::chrono::milliseconds;
-        using microseconds = std::chrono::microseconds;
-        using nanoseconds = std::chrono::nanoseconds;
-
         using namespace std::chrono;
+
+        using seconds = duration<double, std::ratio<1, 1>>;
+        using milliseconds = duration<double, std::milli>;
+        using microseconds = duration<double, std::micro>;
+        using nanoseconds = duration<double, std::nano>;
 
         template<typename Duration>
         std::ostream& operator<<(std::ostream& stream, const Duration& duration) {
             stream << duration.count();
             return stream;
-        };
+        }
 
         template<typename Duration = std::chrono::nanoseconds>
         auto currentTime() {

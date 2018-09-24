@@ -14,13 +14,29 @@ namespace k5 {
     void CoreApp::launch() {
         runMainLoop = true;
 
-        double time = 0.0;
-        double delta = 0.0;
+        Time::nanoseconds time(0);
+        Time::nanoseconds delta(16666667);
 
-        double currentTime = 0;
+        auto currentTime = Time::currentTime();
+        Time::nanoseconds accumulator(0);
 
         while (runMainLoop) {
+            auto newTime = Time::currentTime();
+            auto frameTime = newTime - currentTime;
+            currentTime = newTime;
 
+            accumulator += frameTime;
+
+            while (accumulator >= delta) {
+                // run simulation
+                time += delta;
+                accumulator -= delta;
+            }
+
+            // for physics lerp
+            double alpha = accumulator / delta;
+
+            // render
         }
 
         // Game will exit now, remember to clean up/finish rendering!
