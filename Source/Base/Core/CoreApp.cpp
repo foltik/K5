@@ -28,7 +28,8 @@ namespace k5 {
             accumulator += frameTime;
 
             while (accumulator >= delta) {
-                // run simulation
+                
+                
                 time += delta;
                 accumulator -= delta;
             }

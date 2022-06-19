@@ -9,16 +9,18 @@ namespace k5 {
     class FrameStack {
     public:
         // Forward parameters to construct in place
-        template<typename... Args>
+        template<typename T, typename... Args>
         void emplaceFrame(Args&&... args) {
             pauseTop();
-            frames.emplace(std::forward<Args>(args)...);
+            frames.push(std::make_unique<T>(std::forward<Args>(args)...));
         }
 
         // std::move in an existing Frame pointer
         void pushFrame(std::unique_ptr<Frame> frame);
 
         void popFrame();
+
+        std::unique_ptr<Frame>& currentFrame()
 
     protected:
         FrameStack() = default;
